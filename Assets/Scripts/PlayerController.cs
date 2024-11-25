@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public Transform cameraObject;
     public Transform playerObject;
     public Transform playerAngle;
-
+    public GameObject pressPanel;
 
     float horizontalAngle;
     float verticalAngle;
@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     InputAction lookAction;
     InputAction cameraAction;
     InputAction runAction;
+    InputAction skillMAction;
+    InputAction skillNAction;
+    InputAction skillBAction;
+
 
     CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
 
@@ -44,6 +48,10 @@ public class PlayerController : MonoBehaviour
         lookAction = inputActions.FindAction("Look");
         cameraAction = inputActions.FindAction("Scroll");
         runAction = inputActions.FindAction("Sprint");
+        skillMAction = inputActions.FindAction("SkillM");
+        skillNAction = inputActions.FindAction("SkillN");
+        skillBAction = inputActions.FindAction("SkillB");
+
 
 
 
@@ -109,6 +117,22 @@ public class PlayerController : MonoBehaviour
         stateMachine.Execute();
         characterController.Move(move);
 
+        if (skillMAction.IsPressed() && pressPanel.activeSelf)
+        {
+            OnMedicine();
+        }
+
+        if (skillNAction.IsPressed() && pressPanel.activeSelf)
+        {
+            OnPray();
+        }
+
+        if (skillBAction.IsPressed() && pressPanel.activeSelf)
+        {
+            OnBloodWithdrawal();
+        }
+
+
 
         //마우스 좌우 움직임
         Vector2 look = lookAction.ReadValue<Vector2>();
@@ -159,4 +183,23 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.TransitionTo(stateMachine.runState);
     }
+
+    public void OnBloodWithdrawal()
+    {
+        Debug.Log("방혈치료 시행!");
+
+    }
+
+    public void OnMedicine()
+    {
+        Debug.Log("약물치료 시행!");
+    }
+
+    public void OnPray()
+    {
+        Debug.Log("기도치료 시행!");
+
+    }
+
+
 }

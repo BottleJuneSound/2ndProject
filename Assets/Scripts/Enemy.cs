@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         GetComponent<Animator>().SetTrigger("BossIdle");
-        player = GameObject.FindWithTag("Player");
+        //player = GameObject.FindWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
 
         if (player != null)

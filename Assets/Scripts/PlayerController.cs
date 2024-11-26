@@ -20,9 +20,10 @@ public class PlayerController : MonoBehaviour
     InputAction skillMAction;
     InputAction skillNAction;
     InputAction skillBAction;
+    public InputAction interactiveAction;
 
-
-    CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
+    public bool activeInteract = false;
+    public CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
         skillMAction = inputActions.FindAction("SkillM");
         skillNAction = inputActions.FindAction("SkillN");
         skillBAction = inputActions.FindAction("SkillB");
+        interactiveAction = inputActions.FindAction("Interact");
 
         characterController = GetComponent<CharacterController>();
         stateMachine.Initialize(stateMachine.idleState);
@@ -108,19 +110,30 @@ public class PlayerController : MonoBehaviour
         stateMachine.Execute();
         characterController.Move(move);
 
-        if (skillMAction.IsPressed() && pressPanel.activeSelf)
+
+
+        if (interactiveAction.IsPressed() && pressPanel.activeSelf)
         {
-            OnMedicine();
+            OnInteractive();
+
         }
 
-        if (skillNAction.IsPressed() && pressPanel.activeSelf)
+        if (activeInteract)
         {
-            OnPray();
-        }
+            if (skillMAction.IsPressed() && pressPanel.activeSelf)
+            {
+                OnMedicine();
+            }
 
-        if (skillBAction.IsPressed() && pressPanel.activeSelf)
-        {
-            OnBloodWithdrawal();
+            if (skillNAction.IsPressed() && pressPanel.activeSelf)
+            {
+                OnPray();
+            }
+
+            if (skillBAction.IsPressed() && pressPanel.activeSelf)
+            {
+                OnBloodWithdrawal();
+            }
         }
 
 
@@ -153,18 +166,38 @@ public class PlayerController : MonoBehaviour
     public void OnBloodWithdrawal()
     {
         Debug.Log("방혈치료 시행!");
+        activeInteract = false;
 
     }
 
     public void OnMedicine()
     {
         Debug.Log("약물치료 시행!");
+        activeInteract = false;
     }
 
     public void OnPray()
     {
         Debug.Log("기도치료 시행!");
+        activeInteract = false;
 
+    }
+
+    public void OnInteractive()
+    {
+        if(activeInteract == true) return;
+
+        Debug.Log("상호작용을 시작합니다.");
+        activeInteract = true;
+
+    }
+
+    public void OffInteractive()
+    {
+        if(activeInteract == false) return;
+
+        Debug.Log("상호작용이 종료되었습니다.");
+        if (interactiveAction.IsPressed()) activeInteract = false;
     }
 
 

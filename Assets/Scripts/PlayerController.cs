@@ -1,25 +1,21 @@
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
-    public float walkingSpeed = 2;
-    public float mouseSens = 0.1f;
-    public float mouseScroll = 0.3f;
-    public Transform cameraTranceform;
-    public StateMachine stateMachine;
-    public Transform cameraObject;
-    public Transform playerObject;
-    public Transform playerAngle;
+    public GameObject playerObject;
     public GameObject pressPanel;
+    public Transform playerAngle;
+    public StateMachine stateMachine;
 
-    float horizontalAngle;
-    float verticalAngle;
-    float cameraDeep = 60;
+    public float walkingSpeed = 2;
+    public float rotationSpeed = 1;
+    public float terminalSpeed = 50;
+    public float verticalSpeed = 0;
 
     InputAction moveAction;
-    InputAction lookAction;
-    InputAction cameraAction;
     InputAction runAction;
     InputAction skillMAction;
     InputAction skillNAction;
@@ -45,34 +41,42 @@ public class PlayerController : MonoBehaviour
         InputActionAsset inputActions = GetComponent<PlayerInput>().actions;
 
         moveAction = inputActions.FindAction("Move");
-        lookAction = inputActions.FindAction("Look");
-        cameraAction = inputActions.FindAction("Scroll");
         runAction = inputActions.FindAction("Sprint");
         skillMAction = inputActions.FindAction("SkillM");
         skillNAction = inputActions.FindAction("SkillN");
         skillBAction = inputActions.FindAction("SkillB");
 
-
-
-
         characterController = GetComponent<CharacterController>();
         stateMachine.Initialize(stateMachine.idleState);
-
-        horizontalAngle = transform.localEulerAngles.y;
-        verticalAngle = 0;
-        cameraDeep = cameraObject.localPosition.z;
 
     }
 
     void Update()
     {
-        
-
-        Vector2 moveVector = moveAction.ReadValue<Vector2>();
 
         //3D에서 y는 Z에 반영하는 것이 자연스러움. xyz 위치 바꿔주는 내용
+        Vector2 moveVector = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(moveVector.x, 0, moveVector.y);
 
+        // 카메라의 방향을 가져옴 (회전을 위한 기준)
+        Transform camTransform = Camera.main.transform;
+        Vector3 camForward = camTransform.forward; // 카메라의 앞 방향
+        Vector3 camRight = camTransform.right;    // 카메라의 오른쪽 방향. x가 음수가 되면 자연스럽게 왼쪽이 된다.
+
+        // y축 값을 0으로 설정하여 카메라가 수평 방향으로만 이동하도록 설정
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        // 입력된 방향을 카메라의 회전 방향에 맞춰 조정
+        Vector3 moveDir = (camRight * moveVector.x + camForward * moveVector.y).normalized;
+
+        // 이동할 방향이 있을 경우 (이동 중일 경우) 캐릭터의 회전
+        if (moveDir != Vector3.zero)
+        {
+            transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotationSpeed);
+        }
 
         if (moveVector.magnitude > 1)
         {
@@ -85,20 +89,7 @@ public class PlayerController : MonoBehaviour
             currentSpeed = walkingSpeed * 3;
         }
 
-        move = move * currentSpeed * Time.deltaTime;
-        move = transform.TransformDirection(move);  //벡터의 방향을 바라보는 방향으로 초기화
-
-
-        // A와 D 키로 회전 처리 (왼쪽: -90, 오른쪽: +90)
-        if (moveVector.x < 0)  // A 키를 눌렀을 때
-        {
-            playerAngle.Rotate(0, -90 * 2 * Time.deltaTime, 0);  // -90 회전 (왼쪽)
-        }
-        else if (moveVector.x > 0)  // D 키를 눌렀을 때
-        {
-            playerAngle.Rotate(0, 90 * 2 * Time.deltaTime, 0);  // +90 회전 (오른쪽)
-        }
-
+        move = moveDir * currentSpeed * Time.deltaTime;
 
         if (!moveAction.IsPressed())
         {
@@ -133,40 +124,15 @@ public class PlayerController : MonoBehaviour
         }
 
 
+        ////마우스 휠 움직임
+        //Vector2 lookDeep = cameraAction.ReadValue<Vector2>();
+        //float zoom = lookDeep.y * mouseScroll;
+        //cameraDeep += zoom;
+        //cameraDeep = Mathf.Clamp(cameraDeep, -40f, -0.7f);
 
-        //마우스 좌우 움직임
-        Vector2 look = lookAction.ReadValue<Vector2>();
-
-        float turnPlayer = look.x * mouseSens;
-        horizontalAngle += turnPlayer;
-        //horizontalAngle = Mathf.Clamp(horizontalAngle, -70f, 70f);
-
-        if (horizontalAngle >= 360) horizontalAngle -= 360;
-        if (horizontalAngle < 0) horizontalAngle += 360;
-
-        Vector3 currentAngle = playerObject.localEulerAngles;
-        currentAngle.y = horizontalAngle;
-        playerObject.localEulerAngles = currentAngle;
-
-        //마우스 상하 움직임
-        float turnCam = look.y * mouseSens;
-        verticalAngle -= turnCam;
-        verticalAngle = Mathf.Clamp(verticalAngle, -80f, 80f);
-
-        currentAngle = cameraObject.localEulerAngles;
-        currentAngle.x = verticalAngle;
-        cameraObject.localEulerAngles = currentAngle;
-
-
-        //마우스 휠 움직임
-        Vector2 lookDeep = cameraAction.ReadValue<Vector2>();
-        float zoom = lookDeep.y * mouseScroll;
-        cameraDeep += zoom;
-        cameraDeep = Mathf.Clamp(cameraDeep, -40f, -0.7f);
-
-        Vector3 currentDeep = cameraObject.localPosition;
-        currentDeep.z = cameraDeep;
-        cameraObject.localPosition = currentDeep;
+        //Vector3 currentDeep = cameraObject.localPosition;
+        //currentDeep.z = cameraDeep;
+        //cameraObject.localPosition = currentDeep;
 
     }
 

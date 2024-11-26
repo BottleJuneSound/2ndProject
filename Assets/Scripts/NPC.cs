@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    public GameObject pressPanel;
+    //public GameObject pressPanel;
 
     [SerializeField]
     private PlayerController playerController;
 
     void Start()
     {
-        pressPanel.SetActive(false);
+        playerController.pressPanel.SetActive(false);
+        playerController.popupPanel.SetActive(false);
+
         if (playerController == null)
         {
             //이렇게 구지 때려 넣어야지 들어간다고?
@@ -25,6 +27,15 @@ public class NPC : MonoBehaviour
 
     void Update()
     {
+
+
+
+        if (playerController.interactiveAction.IsPressed() && playerController.pressPanel.activeSelf)
+        {
+            playerController.popupPanel.SetActive(true);
+            Debug.Log("작동확인 " + playerController.activeInteract);
+
+        }
         //if (gameObject.tag != "Player")
         //{
         //    pressPanel.SetActive(false);
@@ -45,12 +56,21 @@ public class NPC : MonoBehaviour
 
     public void OnTriggerEnter(Collider npcCollider)
     {
+
         if (npcCollider.gameObject.tag == "Player")
         {
+            if (playerController.pressPanel.activeSelf)
+            {
+                Debug.Log("리턴!");
+                return;
+            }
+
             Debug.Log(playerController.activeInteract);
             playerController.activeInteract = false;
-            pressPanel.SetActive(true);
+            playerController.pressPanel.SetActive(true);
             Debug.Log("닿고있다!");
+
+
 
         }
 
@@ -60,10 +80,12 @@ public class NPC : MonoBehaviour
     {
         if (npcCollider.gameObject.tag == "Player")
         {
-            pressPanel.SetActive(false);
+            playerController.pressPanel.SetActive(false);
+            playerController.popupPanel.SetActive(false);
+
             Debug.Log("벗어났다");
 
-            if(!pressPanel.activeSelf) //상호작용상태로 벗어났을 경우를 대비
+            if(!playerController.pressPanel.activeSelf) //상호작용상태로 벗어났을 경우를 대비
             {
                 playerController.OffInteractive();    //플레이어 컨트롤러 클래스에 있는 메서드 사용
                 //playerController.activeInteract = false;    //플레이어 컨트롤러 클래스에 있는 bool타입 변수

@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject playerObject;
     public GameObject pressPanel;
+    public GameObject popupPanel;
+
     public Transform playerAngle;
     public StateMachine stateMachine;
 

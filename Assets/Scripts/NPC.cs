@@ -4,6 +4,14 @@ public class NPC : MonoBehaviour
 {
     //public GameObject pressPanel;
 
+    public enum npcNeedSkill
+    {
+        medicine,
+        blood,
+        pray
+    }
+
+
     [SerializeField]
     private PlayerController playerController;
 
@@ -58,7 +66,7 @@ public class NPC : MonoBehaviour
         {
             if (playerController.pressPanel.activeSelf)
             {
-                Debug.Log("리턴!");
+                //Debug.Log("리턴!");
                 return;
             }
 
@@ -67,7 +75,20 @@ public class NPC : MonoBehaviour
             playerController.pressPanel.SetActive(true);
             //Debug.Log("닿고있다!");
 
+            ////올바른 스킬이 작동하고 있는지 확인하는 방법 고안하기
+            //npcNeedSkill npcNeedSkills;
+            //npcNeedSkills = npcNeedSkill.medicine;
 
+            //switch (npcNeedSkills)
+            //{
+            //    case npcNeedSkill.medicine:
+            //        break;
+
+            //    case npcNeedSkill.blood:
+            //        break;
+            //    case npcNeedSkill.pray:
+            //        break;
+            //}
 
         }
 
@@ -82,7 +103,7 @@ public class NPC : MonoBehaviour
 
             //Debug.Log("벗어났다");
 
-            if(!playerController.pressPanel.activeSelf) //상호작용상태로 벗어났을 경우를 대비
+            if (!playerController.pressPanel.activeSelf) //상호작용상태로 벗어났을 경우를 대비
             {
                 playerController.OffInteractive();    //플레이어 컨트롤러 클래스에 있는 메서드 사용
                 //playerController.activeInteract = false;    //플레이어 컨트롤러 클래스에 있는 bool타입 변수

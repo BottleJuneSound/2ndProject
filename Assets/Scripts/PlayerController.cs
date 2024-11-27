@@ -3,6 +3,7 @@ using Unity.Burst.CompilerServices;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,13 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObject;
     public GameObject pressPanel;
     public GameObject popupPanel;
+    public GameObject loadM;
+    public GameObject loadN;
+    public GameObject loadB;
+    public GameObject buttonM;
+    public GameObject buttonN;
+    public GameObject buttonB;
+
     public TMP_Text npcText;
 
     public Transform playerAngle;
@@ -178,22 +186,23 @@ public class PlayerController : MonoBehaviour
         {
             if (onSkillM)
             {
+                //buttonM.GetComponent<Image>().color = Color.clear / Time.deltaTime;       // 점진전으로 a값 증가 시킬 수 있는 방법 찾기
                 skillActive = true;
-                currentText = "Choice M Skill";
+                currentText = "약물치료를 시행하였습니다.";
                 npcText.text = currentText;
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillN)
             {
                 skillActive = true;
-                currentText = "Choice N Skill";
+                currentText = "기도를 시행하였습니다.";
                 npcText.text = currentText;
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillB)
             {
                 skillActive = true;
-                currentText = "Choice B Skill";
+                currentText = "방혈치료를 시행하였습니다.";
                 npcText.text = currentText;
                 Invoke("ResetAllSkill", 3f);
             }
@@ -202,8 +211,6 @@ public class PlayerController : MonoBehaviour
                 npcText.text = oriText;
             }
         }
-
-
 
 
         ////마우스 휠 움직임
@@ -218,13 +225,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void ResetAllSkill()
+    public void ResetAllSkill() //스킬 상태 초기화
     {
         if (skillActive)
         {
             onSkillM = false;
             onSkillN = false;
             onSkillB = false;
+            loadM.gameObject.SetActive(false);
+            loadN.gameObject.SetActive(false);
+            loadB.gameObject.SetActive(false);
+
+
+
 
             skillActive = false;
             npcText.text = oriText;
@@ -249,6 +262,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnBloodWithdrawal() // 상호작용 스킬 사용시, 상호작용 시작부분으로 돌아옴.
     {
+        loadB.gameObject.SetActive(true);
         Debug.Log("방혈치료 시행!");
         OnInteractive();
         //activeInteract = false;
@@ -257,6 +271,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMedicine()
     {
+        loadM.gameObject.SetActive(true);
         Debug.Log("약물치료 시행!");
         OnInteractive();
         //activeInteract = false;
@@ -264,6 +279,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPray()
     {
+        loadN.gameObject.SetActive(true);
         Debug.Log("기도치료 시행!");
         OnInteractive();
         //activeInteract = false;

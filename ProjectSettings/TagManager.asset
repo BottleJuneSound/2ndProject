@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Light
+  - NPC
   layers:
   - Default
   - TransparentFX

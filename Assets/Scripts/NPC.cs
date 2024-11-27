@@ -27,9 +27,6 @@ public class NPC : MonoBehaviour
 
     void Update()
     {
-
-
-
         if (playerController.interactiveAction.IsPressed() && playerController.pressPanel.activeSelf)
         {
             playerController.popupPanel.SetActive(true);

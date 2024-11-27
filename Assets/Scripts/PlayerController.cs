@@ -1,4 +1,6 @@
+using TMPro;
 using Unity.Burst.CompilerServices;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -8,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObject;
     public GameObject pressPanel;
     public GameObject popupPanel;
+    public TMP_Text npcText;
 
     public Transform playerAngle;
     public StateMachine stateMachine;
@@ -17,15 +20,19 @@ public class PlayerController : MonoBehaviour
     public float terminalSpeed = 50;
     public float verticalSpeed = 0;
 
+    [SerializeField]
+    CinemachineInputAxisController cineCam;
     InputAction moveAction;
     InputAction runAction;
     InputAction skillMAction;
     InputAction skillNAction;
     InputAction skillBAction;
+    InputAction closePopupAction;
     public InputAction interactiveAction;
 
     public bool activeInteract = false;
-    public CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
+    public bool onSkillM = false;
+    CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
 
     private void Awake()
     {
@@ -49,9 +56,17 @@ public class PlayerController : MonoBehaviour
         skillNAction = inputActions.FindAction("SkillN");
         skillBAction = inputActions.FindAction("SkillB");
         interactiveAction = inputActions.FindAction("Interact");
+        closePopupAction = inputActions.FindAction("Exit");
 
         characterController = GetComponent<CharacterController>();
         stateMachine.Initialize(stateMachine.idleState);
+
+        if(cineCam == null)
+        {
+            cineCam = GetComponent<CinemachineInputAxisController>();
+            cineCam.enabled = true;
+            Debug.Log("이제 시네머신 null아님!");
+        }
 
     }
 
@@ -136,6 +151,12 @@ public class PlayerController : MonoBehaviour
             {
                 OnBloodWithdrawal();
             }
+
+            if(closePopupAction.IsPressed() && pressPanel.activeSelf)
+            {
+                ClosePopup();
+            }
+
         }
 
 
@@ -165,23 +186,34 @@ public class PlayerController : MonoBehaviour
         stateMachine.TransitionTo(stateMachine.runState);
     }
 
-    public void OnBloodWithdrawal()
+    public void OnBloodWithdrawal() // 상호작용 스킬 사용시, 상호작용 시작부분으로 돌아옴.
     {
         Debug.Log("방혈치료 시행!");
-        activeInteract = false;
+        onSkillM = true;
+        OnInteractive();
+        //activeInteract = false;
 
     }
 
     public void OnMedicine()
     {
         Debug.Log("약물치료 시행!");
-        activeInteract = false;
+        OnInteractive();
+        //activeInteract = false;
     }
 
     public void OnPray()
     {
         Debug.Log("기도치료 시행!");
-        activeInteract = false;
+        OnInteractive();
+        //activeInteract = false;
+
+    }
+
+    public void ClosePopup()    // 창을 비활성화 하고 인터렉티브 해제 메서드 실행
+    {
+        popupPanel.SetActive(false);
+        OffInteractive();
 
     }
 
@@ -191,6 +223,9 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("상호작용을 시작합니다.");
         activeInteract = true;
+        cineCam.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
     }
 
@@ -200,6 +235,32 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("상호작용이 종료되었습니다.");
         if (interactiveAction.IsPressed()) activeInteract = false;
+        cineCam.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+    }
+
+
+    private void OnTriggerEnter(Collider playerTrigger)
+    {
+        if (playerTrigger.gameObject.tag == "NPC")
+        {
+            npcText.gameObject.SetActive(true);
+
+            if (onSkillM)
+            {
+                //TMP 패널의 내용을 변경하는 방식으로 쓰자
+                //NPCText를 재활용하자
+            }
+        }
+    }
+    private void OnTriggerExit(Collider playerTrigger)
+    {
+        if (playerTrigger.gameObject.tag == "NPC")
+        {
+            npcText.gameObject.SetActive(false);
+
+        }
     }
 
 

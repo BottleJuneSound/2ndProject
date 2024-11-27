@@ -30,7 +30,7 @@ public class NPC : MonoBehaviour
         if (playerController.interactiveAction.IsPressed() && playerController.pressPanel.activeSelf)
         {
             playerController.popupPanel.SetActive(true);
-            Debug.Log("작동확인 " + playerController.activeInteract);
+            //Debug.Log("작동확인 " + playerController.activeInteract);
 
         }
         //if (gameObject.tag != "Player")
@@ -62,10 +62,10 @@ public class NPC : MonoBehaviour
                 return;
             }
 
-            Debug.Log(playerController.activeInteract);
+            //Debug.Log(playerController.activeInteract);
             playerController.activeInteract = false;
             playerController.pressPanel.SetActive(true);
-            Debug.Log("닿고있다!");
+            //Debug.Log("닿고있다!");
 
 
 
@@ -80,13 +80,13 @@ public class NPC : MonoBehaviour
             playerController.pressPanel.SetActive(false);
             playerController.popupPanel.SetActive(false);
 
-            Debug.Log("벗어났다");
+            //Debug.Log("벗어났다");
 
             if(!playerController.pressPanel.activeSelf) //상호작용상태로 벗어났을 경우를 대비
             {
                 playerController.OffInteractive();    //플레이어 컨트롤러 클래스에 있는 메서드 사용
                 //playerController.activeInteract = false;    //플레이어 컨트롤러 클래스에 있는 bool타입 변수
-                Debug.Log("상호작용상태 비활성화");
+                //Debug.Log("상호작용상태 비활성화");
             }
 
         }

@@ -30,8 +30,14 @@ public class PlayerController : MonoBehaviour
     InputAction closePopupAction;
     public InputAction interactiveAction;
 
+    public string oriText;
+    public string currentText;
+
     public bool activeInteract = false;
     public bool onSkillM = false;
+    public bool onSkillN = false;
+    public bool onSkillB = false;
+    public bool skillActive = false;
     CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
 
     private void Awake()
@@ -60,8 +66,9 @@ public class PlayerController : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         stateMachine.Initialize(stateMachine.idleState);
+        oriText = npcText.text;
 
-        if(cineCam == null)
+        if (cineCam == null)
         {
             cineCam = GetComponent<CinemachineInputAxisController>();
             cineCam.enabled = true;
@@ -139,16 +146,23 @@ public class PlayerController : MonoBehaviour
         {
             if (skillMAction.IsPressed() && pressPanel.activeSelf)
             {
+                if(skillActive) return;
+                onSkillM = true;
                 OnMedicine();
+
             }
 
             if (skillNAction.IsPressed() && pressPanel.activeSelf)
             {
+                if (skillActive) return;
+                onSkillN = true;
                 OnPray();
             }
 
             if (skillBAction.IsPressed() && pressPanel.activeSelf)
             {
+                if (skillActive) return;
+                onSkillB = true;
                 OnBloodWithdrawal();
             }
 
@@ -158,6 +172,38 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+
+        //상호작용 Text 내용변경하는 업데이트
+        if (npcText.gameObject.activeSelf && !skillActive)
+        {
+            if (onSkillM)
+            {
+                skillActive = true;
+                currentText = "Choice M Skill";
+                npcText.text = currentText;
+                Invoke("ResetAllSkill", 3f);
+            }
+            else if (onSkillN)
+            {
+                skillActive = true;
+                currentText = "Choice N Skill";
+                npcText.text = currentText;
+                Invoke("ResetAllSkill", 3f);
+            }
+            else if (onSkillB)
+            {
+                skillActive = true;
+                currentText = "Choice B Skill";
+                npcText.text = currentText;
+                Invoke("ResetAllSkill", 3f);
+            }
+            else
+            {
+                npcText.text = oriText;
+            }
+        }
+
+
 
 
         ////마우스 휠 움직임
@@ -169,6 +215,21 @@ public class PlayerController : MonoBehaviour
         //Vector3 currentDeep = cameraObject.localPosition;
         //currentDeep.z = cameraDeep;
         //cameraObject.localPosition = currentDeep;
+
+    }
+
+    public void ResetAllSkill()
+    {
+        if (skillActive)
+        {
+            onSkillM = false;
+            onSkillN = false;
+            onSkillB = false;
+
+            skillActive = false;
+            npcText.text = oriText;
+        }
+
 
     }
 
@@ -189,7 +250,6 @@ public class PlayerController : MonoBehaviour
     public void OnBloodWithdrawal() // 상호작용 스킬 사용시, 상호작용 시작부분으로 돌아옴.
     {
         Debug.Log("방혈치료 시행!");
-        onSkillM = true;
         OnInteractive();
         //activeInteract = false;
 
@@ -247,11 +307,6 @@ public class PlayerController : MonoBehaviour
         {
             npcText.gameObject.SetActive(true);
 
-            if (onSkillM)
-            {
-                //TMP 패널의 내용을 변경하는 방식으로 쓰자
-                //NPCText를 재활용하자
-            }
         }
     }
     private void OnTriggerExit(Collider playerTrigger)

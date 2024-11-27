@@ -32,9 +32,9 @@ public class PlayerController : MonoBehaviour
     CinemachineInputAxisController cineCam;
     InputAction moveAction;
     InputAction runAction;
-    InputAction skillMAction;
-    InputAction skillNAction;
-    InputAction skillBAction;
+    public InputAction skillMAction;
+    public InputAction skillNAction;
+    public InputAction skillBAction;
     InputAction closePopupAction;
     public InputAction interactiveAction;
 
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public bool onSkillM = false;
     public bool onSkillN = false;
     public bool onSkillB = false;
+    //public bool onSkillFail = false;
+
     public bool skillActive = false;
     CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
 
@@ -206,6 +208,13 @@ public class PlayerController : MonoBehaviour
                 npcText.text = currentText;
                 Invoke("ResetAllSkill", 3f);
             }
+            //else if (onSkillFail)
+            //{
+            //    skillActive = true;
+            //    currentText = "환자가 혼란스러워합니다.";
+            //    npcText.text = currentText;
+            //    Invoke("ResetAllSkill", 3f);
+            //}
             else
             {
                 npcText.text = oriText;
@@ -232,6 +241,7 @@ public class PlayerController : MonoBehaviour
             onSkillM = false;
             onSkillN = false;
             onSkillB = false;
+            //onSkillFail = false;
             loadM.gameObject.SetActive(false);
             loadN.gameObject.SetActive(false);
             loadB.gameObject.SetActive(false);

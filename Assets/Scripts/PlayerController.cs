@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     public bool onSkillM = false;
     public bool onSkillN = false;
     public bool onSkillB = false;
-    //public bool onSkillFail = false;
+    public bool onClose = false;
 
     public bool skillActive = false;
     CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
@@ -150,7 +150,6 @@ public class PlayerController : MonoBehaviour
         if (interactiveAction.IsPressed() && pressPanel.activeSelf)
         {
             OnInteractive();
-
         }
 
         if (activeInteract)
@@ -180,6 +179,7 @@ public class PlayerController : MonoBehaviour
             if(closePopupAction.IsPressed() && pressPanel.activeSelf)
             {
                 ClosePopup();
+                onClose = true;
             }
 
         }
@@ -209,13 +209,7 @@ public class PlayerController : MonoBehaviour
                 npcText.text = currentText;
                 Invoke("ResetAllSkill", 3f);
             }
-            //else if (onSkillFail)
-            //{
-            //    skillActive = true;
-            //    currentText = "환자가 혼란스러워합니다.";
-            //    npcText.text = currentText;
-            //    Invoke("ResetAllSkill", 3f);
-            //}
+
             else
             {
                 npcText.text = oriText;
@@ -242,7 +236,6 @@ public class PlayerController : MonoBehaviour
             onSkillM = false;
             onSkillN = false;
             onSkillB = false;
-            //onSkillFail = false;
             loadM.gameObject.SetActive(false);
             loadN.gameObject.SetActive(false);
             loadB.gameObject.SetActive(false);
@@ -298,6 +291,7 @@ public class PlayerController : MonoBehaviour
 
     public void ClosePopup()    // 창을 비활성화 하고 인터렉티브 해제 메서드 실행
     {
+        if(onClose == true) return;
         popupPanel.SetActive(false);
         OffInteractive();
 
@@ -324,6 +318,8 @@ public class PlayerController : MonoBehaviour
         cineCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
+        onClose = false;
+
     }
 
 
@@ -339,7 +335,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerTrigger.gameObject.tag == "NPC")
         {
-            npcText.gameObject.SetActive(false);
+            npcText.gameObject.SetActive(false);    // 이 부분에서 상호작용 종료 디버그가 발생하네? 어디서 실행되는건지 확인필요
 
         }
     }

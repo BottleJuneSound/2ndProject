@@ -57,13 +57,21 @@ public class Enemy : MonoBehaviour
     }
     public void BossMove()
     {
-        if (isBossDown == true) return;
+        if (agent.enabled == true)  //보스 오브젝트 비활성화시 에러를 방지하기 위한 조건
+        {
+            if (isBossDown == true) return;
 
-        agent.isStopped = false;
-        lastPlayerPosition = player.transform.position; // 최신 위치 저장
-        agent.destination = lastPlayerPosition; // 목적지 갱신
-        GetComponent<Animator>().SetTrigger("BossIdle");
+            agent.isStopped = false;
+            lastPlayerPosition = player.transform.position; // 최신 위치 저장
+            agent.destination = lastPlayerPosition; // 목적지 갱신
+            GetComponent<Animator>().SetTrigger("BossIdle");
+        }
+        else
+        {
+            return;
+        }
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Light"))

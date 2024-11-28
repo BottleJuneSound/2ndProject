@@ -232,8 +232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 262, y: 16}
-  m_SizeDelta: {x: -502.91968, y: 20.060547}
+  m_AnchoredPosition: {x: -327.47498, y: 23.707153}
+  m_SizeDelta: {x: -641.1897, y: -17.353638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &303103505
 MonoBehaviour:
@@ -564,6 +564,111 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 446764777}
   m_SourcePrefab: {fileID: 100100000, guid: e7deb7dde87930a4599d7fddfded3cf6, type: 3}
+--- !u!1 &763878646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763878648}
+  - component: {fileID: 763878647}
+  - component: {fileID: 763878649}
+  m_Layer: 0
+  m_Name: BossFightCam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &763878647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763878646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 4795561855984421864}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 20
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!4 &763878648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763878646}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000002535533, y: 0.8746425, z: -4.1498016e-10, w: -0.48476863}
+  m_LocalPosition: {x: 50, y: 3, z: 35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 12.805, y: -1.615, z: 0}
+--- !u!114 &763878649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763878646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38bda98361e1de48a4ca2bd86ea3c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Composition:
+    ScreenPosition: {x: 0, y: 0}
+    DeadZone:
+      Enabled: 0
+      Size: {x: 0.2, y: 0.2}
+    HardLimits:
+      Enabled: 0
+      Size: {x: 0.8, y: 0.8}
+      Offset: {x: 0, y: 0}
+  CenterOnActivate: 1
+  TargetOffset: {x: 0, y: 3, z: 0}
+  Damping: {x: 0.5, y: 0.5}
+  Lookahead:
+    Enabled: 1
+    Time: 0
+    Smoothing: 0
+    IgnoreY: 1
 --- !u!1 &779041026
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,8 +1541,9 @@ GameObject:
   - component: {fileID: 1942258790}
   - component: {fileID: 1942258789}
   - component: {fileID: 1942258788}
+  - component: {fileID: 1942258792}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: BossZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1532,6 +1638,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1942258792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942258787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8871a521017b32f479617c569d332099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossZone: {fileID: 1942258787}
+  bossFightCam: {fileID: 763878646}
+  playerCam: {fileID: 1320199404}
+  boss: {fileID: 1953779270}
 --- !u!1001 &1953779269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1547,6 +1669,18 @@ PrefabInstance:
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1566,15 +1700,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2368,8 +2502,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 98.32831, y: -150}
-  m_SizeDelta: {x: -1353.2166, y: -1050}
+  m_AnchoredPosition: {x: 579, y: 467}
+  m_SizeDelta: {x: -1214.9465, y: -1012.5858}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1198861614359498631
 Transform:
@@ -2644,6 +2778,7 @@ MonoBehaviour:
   onSkillM: 0
   onSkillN: 0
   onSkillB: 0
+  onClose: 0
   skillActive: 0
 --- !u!224 &1588717121444402827
 RectTransform:
@@ -6782,8 +6917,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1660563593}
   - {fileID: 733027499}
-  - {fileID: 1953779269}
-  - {fileID: 1942258791}
   - {fileID: 779041028}
   - {fileID: 683897813}
   - {fileID: 7319097604673266859}
@@ -6791,3 +6924,6 @@ SceneRoots:
   - {fileID: 238534853}
   - {fileID: 4795561855984421864}
   - {fileID: 1320199410}
+  - {fileID: 763878648}
+  - {fileID: 1942258791}
+  - {fileID: 1953779269}

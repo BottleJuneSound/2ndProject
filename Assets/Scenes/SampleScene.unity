@@ -2602,6 +2602,33 @@ MonoBehaviour:
   terminalSpeed: 1
   verticalSpeed: 0
   cineCam: {fileID: 1320199405}
+  skillMAction:
+    m_Name: Skill M
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b8870bd3-2de7-4bd6-8cfa-782ec85837a2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  skillNAction:
+    m_Name: Skill N
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 07eee3fa-944a-480a-9b59-0e0c02bda582
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  skillBAction:
+    m_Name: Skill B
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e8dbba6b-941b-4b07-aeed-9cd30bce9ecb
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   interactiveAction:
     m_Name: Interactive
     m_Type: 0

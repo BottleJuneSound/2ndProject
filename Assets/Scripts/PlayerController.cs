@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
         closePopupAction = inputActions.FindAction("Exit");
 
         characterController = GetComponent<CharacterController>();
+
         stateMachine.Initialize(stateMachine.idleState);
         oriText = npcText.text;
 
@@ -245,7 +246,6 @@ public class PlayerController : MonoBehaviour
             loadM.gameObject.SetActive(false);
             loadN.gameObject.SetActive(false);
             loadB.gameObject.SetActive(false);
-
 
 
 

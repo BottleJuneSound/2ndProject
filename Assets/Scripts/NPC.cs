@@ -5,6 +5,8 @@ public class NPC : MonoBehaviour
     //public GameObject pressPanel;
     public npcNeedSkill currentNeedSkill;
     public bool nowInteracting = false;
+    public bool hasUsedSkill = false;
+
     public enum npcNeedSkill
     {
         medicine,
@@ -25,14 +27,14 @@ public class NPC : MonoBehaviour
         {
             //이렇게 구지 때려 넣어야지 들어간다고?
             playerController = GetComponent<PlayerController>();
-
             //Debug.Log("아직도 null이라고?");
         }
         //playerController.activeInteract = false;
         //Debug.Log(playerController.activeInteract);
+
         // NPC가 원하는 상호작용을 랜덤으로 설정(예시)
         currentNeedSkill = (npcNeedSkill)Random.Range(0, 3);
-        //Debug.Log(currentNeedSkill);
+        Debug.Log($"NPC 상호작용 정답: {gameObject.name} + {currentNeedSkill}");
 
     }
 
@@ -44,22 +46,34 @@ public class NPC : MonoBehaviour
             //Debug.Log("작동확인 " + playerController.activeInteract);
         }
 
-        if (nowInteracting && (playerController.skillMAction.IsPressed() ||
+        if (nowInteracting && !hasUsedSkill && 
+            (playerController.skillMAction.IsPressed() ||
             playerController.skillNAction.IsPressed() ||
             playerController.skillBAction.IsPressed()) &&
             playerController.popupPanel.activeSelf)
         {
-            //Debug.Log("조건문 통과");
+            //Debug.Log(CheckSkillMatch());
+            hasUsedSkill = true;
 
-            // NPC가 원하는 스킬에 맞는지 확인
-            if (CheckSkillMatch() == true)
+            // NPC가 원하는 스킬이 맞는지 확인
+            if (CheckSkillMatch())
             {
                 Debug.Log($"정답 입니다. NPC: {gameObject.name}");
-                return;
+                //hasUsedSkill = true;
+                Invoke("SetQuiz", 3f);
+
+                //return;
 
             }
-            Debug.Log($"잘못된 상호작용입니다. NPC: {gameObject.name}");  // 정답을 맞춘경우에도 해당 로그가 출력되는 문제를 가지고 있음. 수정 필요
+            if(!CheckSkillMatch())
+            {
+                Debug.Log($"잘못된 상호작용입니다. NPC: {gameObject.name}");
+                //hasUsedSkill = true;
+                Invoke("SetQuiz", 3f);
+                //return;
+            }
 
+           
         }
 
         //if (gameObject.tag != "Player")
@@ -84,23 +98,31 @@ public class NPC : MonoBehaviour
     private bool CheckSkillMatch()
     {
         //Debug.Log(playerController.onSkillM);
-
-        if (currentNeedSkill == npcNeedSkill.medicine && playerController.onSkillM)
+        if (currentNeedSkill == npcNeedSkill.medicine && playerController.skillMAction.IsPressed())
         {
-            playerController.onSkillM = false;
+            //playerController.onSkillM = false;
+            Debug.Log("11");
             return true;
         }
-        else if (currentNeedSkill == npcNeedSkill.blood && playerController.onSkillB)
+        if (currentNeedSkill == npcNeedSkill.blood && playerController.skillBAction.IsPressed())
         {
-            playerController.onSkillB = false;
+            //playerController.onSkillB = false;
+            Debug.Log("22");
             return true;
         }
-        else if (currentNeedSkill == npcNeedSkill.pray && playerController.onSkillN)
+        if (currentNeedSkill == npcNeedSkill.pray && playerController.skillNAction.IsPressed())
         {
-            playerController.onSkillN = false;
+            //playerController.onSkillN = false;
+            Debug.Log("33");
             return true;
-        }
+        } 
+        Debug.Log("00");
         return false;
+    }
+
+    public void SetQuiz()
+    {
+        hasUsedSkill = false;;
     }
 
     public void OnTriggerEnter(Collider npcCollider)
@@ -147,6 +169,8 @@ public class NPC : MonoBehaviour
 
             playerController.pressPanel.SetActive(false);
             playerController.popupPanel.SetActive(false);
+            // 스킬 사용 여부 리셋
+            hasUsedSkill = false; // 상호작용이 끝났을 때 스킬 사용 여부를 초기화
 
             //Debug.Log("벗어났다");
 

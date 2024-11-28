@@ -53,10 +53,11 @@ public class NPC : MonoBehaviour
             playerController.popupPanel.activeSelf)
         {
             //Debug.Log(CheckSkillMatch());
-            hasUsedSkill = true;
+            bool isSkillMatch = CheckSkillMatch();  //메서드를 변수로 변환하여 중복 호출을 해결함.
+            hasUsedSkill = true;    //이것도 있어야 중복호출 방지할 수 있음
 
             // NPC가 원하는 스킬이 맞는지 확인
-            if (CheckSkillMatch())
+            if (isSkillMatch)
             {
                 Debug.Log($"정답 입니다. NPC: {gameObject.name}");
                 //hasUsedSkill = true;
@@ -65,7 +66,7 @@ public class NPC : MonoBehaviour
                 //return;
 
             }
-            if(!CheckSkillMatch())
+            else if(!isSkillMatch)
             {
                 Debug.Log($"잘못된 상호작용입니다. NPC: {gameObject.name}");
                 //hasUsedSkill = true;

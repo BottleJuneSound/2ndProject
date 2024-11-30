@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent agent;
     private Vector3 lastPlayerPosition; // 이전 플레이어 위치 저장
     bool isBossDown = false;   // BossDown 실행 상태를 나타내는 플래그
+    bool isRangeOut = false;    // 콜라이더 충돌에서 벗어난 경우 속도, 타이머 초기화를 위한 상태변수
     public float triggerTime = 2f;
     public bool triggerLight = false;
     
@@ -46,15 +47,29 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void SetBossSpeed()  //플레이어와 상호작용 상태에 따라 이동 속도, 보스다운 타이머 초기화 하는 메서드
+    {
+        isRangeOut = false;
+        isBossDown = false;
+        triggerTime = 0.5f;
+        agent.speed = 5f;
+        agent.acceleration = 0.8f;
+        agent.stoppingDistance = 5;
+        //GetComponent<Animator>().SetTrigger("BossIdle");
+
+    }
+
     public void BossDown()
     {
         //보스 오브젝트 비활성화시 에러를 방지하기 위한 조건
         if (agent.enabled == true)
         {
-            triggerTime = 2f;
-            agent.speed = 15f;
             agent.isStopped = true;
+            isBossDown = true;
             GetComponent<Animator>().SetTrigger("BossHit");
+            Invoke("SetBossSpeed", 5f);
+            Invoke("BossMove", 5f);
+
         }
         else
         {
@@ -63,9 +78,14 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void EndDown()
+    public void EndDown()   //보스가 다운 후 플레이어가 범위안에 있다면 바로 일어서지 않도록 하는 메서드
     {
         isBossDown = false;
+        triggerTime = 0.5f;
+        agent.speed = 5f;
+        agent.acceleration = 0.8f;
+        agent.stoppingDistance = 5;
+
         Invoke("BossMove", 5f);
 
     }
@@ -90,8 +110,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Light"))
         {
+            agent.acceleration = 0.1f;
             agent.speed = 0.5f;
             triggerLight = true;
+            isRangeOut = true;
             //Debug.Log(agent.speed);
 
             //isBossDown = true;
@@ -99,7 +121,7 @@ public class Enemy : MonoBehaviour
             //BossDown();
 
             //if(triggerTime > 0 && !isBossDown) agent.speed = 15f;
-            
+
         }
     }
 
@@ -108,11 +130,12 @@ public class Enemy : MonoBehaviour
         if(triggerLight && other.CompareTag("Light"))
         {
             triggerTime -= Time.deltaTime;
+            agent.stoppingDistance -= Time.deltaTime;
 
-            if(triggerTime <= 0)
+            if (triggerTime < 0 && agent.stoppingDistance > 2)
             {
-                isBossDown = true;
-                Invoke("BossDown", 2f);
+                isRangeOut = true;
+                BossDown();
             }
         }
         //else
@@ -127,8 +150,12 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Light"))
         {
-            EndDown();
+            if (isRangeOut)
+            {
 
+                EndDown();
+
+            }
         }
     }
 }

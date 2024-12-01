@@ -2236,9 +2236,9 @@ MonoBehaviour:
   m_FrameSpace: 0
   m_AnchorPositionOverride: {fileID: 0}
   m_AnchorPositionOffset: {x: 0, y: 0, z: 0}
-  m_Yaw: -96.73764
-  m_Pitch: -3.630276
-  m_Roll: -71.32666
+  m_Yaw: -100.62019
+  m_Pitch: -21.420427
+  m_Roll: -62.68509
 --- !u!4 &384840167431196299
 Transform:
   m_ObjectHideFlags: 0
@@ -2379,7 +2379,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209514151152091073}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2213644e530b55249ac07ae32fa5d360, type: 2}
   m_CullingMode: 0
@@ -2787,19 +2787,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1170879276060771982, guid: 6f7a7911383b4b042a7daed4d80bbf90, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70899516
+      value: 0.66311556
       objectReference: {fileID: 0}
     - target: {fileID: 1170879276060771982, guid: 6f7a7911383b4b042a7daed4d80bbf90, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.1624001
+      value: -0.27381152
       objectReference: {fileID: 0}
     - target: {fileID: 1170879276060771982, guid: 6f7a7911383b4b042a7daed4d80bbf90, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.20218128
+      value: -0.32222545
       objectReference: {fileID: 0}
     - target: {fileID: 1170879276060771982, guid: 6f7a7911383b4b042a7daed4d80bbf90, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.6558009
+      value: 0.6176374
       objectReference: {fileID: 0}
     - target: {fileID: 1170879276060771982, guid: 6f7a7911383b4b042a7daed4d80bbf90, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2807,7 +2807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1170879276060771982, guid: 6f7a7911383b4b042a7daed4d80bbf90, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -30
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 1170879276060771982, guid: 6f7a7911383b4b042a7daed4d80bbf90, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2944,6 +2944,7 @@ MonoBehaviour:
   buttonM: {fileID: 2341030263671667519}
   buttonN: {fileID: 3965035747847322721}
   buttonB: {fileID: 5279169499728289085}
+  lightAttackCollider: {fileID: 4861374233233511393}
   npcText: {fileID: 2072525126}
   playerAngle: {fileID: 4640104867210170690}
   walkingSpeed: 2
@@ -2995,6 +2996,8 @@ MonoBehaviour:
   onSkillB: 0
   onClose: 0
   skillActive: 0
+  lightAttackButton: 0
+  isAttack: 0
 --- !u!224 &1588717121444402827
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4152,7 +4155,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.4
   m_Center: {x: -0.00000008472701, y: 0, z: 0.00000024583784}
@@ -5021,13 +5024,14 @@ GameObject:
   - component: {fileID: 1171794782693901495}
   - component: {fileID: 410469976851585100}
   - component: {fileID: 3331656831693459728}
+  - component: {fileID: 7974472294568477245}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4889914842849465570
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6564,13 +6568,36 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4861374233233511393}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.45955604, y: -0.504844, z: -0.5072214, w: -0.52599174}
+  m_LocalRotation: {x: -0.010483036, y: 0.6826044, z: 0.009793734, w: 0.7306473}
   m_LocalPosition: {x: -0.00005495069, y: -0.350151, z: 0.008041443}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1209514151152091072}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.644, y: 86.106, z: 0}
+--- !u!136 &7974472294568477245
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4861374233233511393}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Height: 2.6
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.64, z: 0.000000008834653}
 --- !u!4 &8117292478615305905
 Transform:
   m_ObjectHideFlags: 0

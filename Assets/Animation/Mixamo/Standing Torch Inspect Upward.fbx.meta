@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3e57d05c8695094b88e5b0e6db7ef42
+guid: 06bf54822e9738542a8860a75479147c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -35,7 +35,7 @@ ModelImporter:
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 89
+      lastFrame: 394
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -526,40 +526,40 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Walking Backwards(Clone)
+    - name: Standing Torch Inspect Upward(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_NPC_Hips
-      parentName: Walking Backwards(Clone)
-      position: {x: -0.004137695, y: 1.0053731, z: 0.008425258}
-      rotation: {x: 0.036253024, y: 0.07347352, z: -0.006160622, w: 0.996619}
+      parentName: Standing Torch Inspect Upward(Clone)
+      position: {x: -0.002016011, y: 1.0160353, z: -0.0015024805}
+      rotation: {x: -0.0075263083, y: -0.01181825, z: -0.0051765908, w: 0.9998885}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_Spine
       parentName: PT_NPC_Hips
       position: {x: -0, y: 0.08352199, z: -0.007203}
-      rotation: {x: -0.03547482, y: -0.029863613, z: 0.004275189, w: 0.99891514}
+      rotation: {x: 0.01386659, y: 0.0003348098, z: 0.02317677, w: 0.99963516}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_Spine2
       parentName: PT_Spine
       position: {x: -0, y: 0.117736, z: -0.003097}
-      rotation: {x: 0.04252367, y: -0.06142519, z: 0.017631825, w: 0.99704957}
+      rotation: {x: 0.009429901, y: 0.010049184, z: -0.019762969, w: 0.9997097}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_Spine3
       parentName: PT_Spine2
       position: {x: -0, y: 0.091901995, z: -0.012948999}
-      rotation: {x: 0.042777598, y: -0.061236568, z: 0.017686171, w: 0.99704933}
+      rotation: {x: 0.009562387, y: 0.0076364875, z: -0.020589001, w: 0.9997132}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_Neck
       parentName: PT_Spine3
       position: {x: -0, y: 0.13004799, z: -0.005072}
-      rotation: {x: 0.025463626, y: -0.087889746, z: -0.029702766, w: 0.9953616}
+      rotation: {x: 0.04045004, y: -0.05272942, z: 0.017643774, w: 0.9976333}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_Head
       parentName: PT_Neck
       position: {x: -0, y: 0.091194, z: 0.024501}
-      rotation: {x: 0.0129299285, y: -0.08939232, z: -0.025091037, w: 0.99559647}
+      rotation: {x: -0.014033949, y: -0.051688418, z: 0.020494016, w: 0.9983544}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_HeadTop
       parentName: PT_Head
@@ -569,32 +569,32 @@ ModelImporter:
     - name: PT_RightShoulder
       parentName: PT_Spine3
       position: {x: 0.065679, y: 0.065528, z: -0.006743}
-      rotation: {x: -0.33582747, y: 0.62849826, z: 0.41083786, w: 0.5687021}
+      rotation: {x: -0.3876018, y: 0.53951895, z: 0.40293452, w: 0.6295458}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightArm
       parentName: PT_RightShoulder
       position: {x: -0.0030669998, y: -0.117159, z: 0.027579}
-      rotation: {x: -0.09744342, y: -0.21361491, z: 0.05929456, w: 0.9702359}
+      rotation: {x: -0.1280008, y: -0.011892912, z: 0.04456738, w: 0.99070084}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightForeArm
       parentName: PT_RightArm
       position: {x: 0.0016889999, y: -0.26940298, z: 0.037284996}
-      rotation: {x: -0.10377231, y: 0.010127217, z: -0.004401045, w: 0.99453986}
+      rotation: {x: -0.10373531, y: -0.08583676, z: -0.01577156, w: 0.9907686}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHand
       parentName: PT_RightForeArm
       position: {x: -0.005955, y: -0.261894, z: -0.012944}
-      rotation: {x: -0.032688744, y: -0.082974106, z: 0.013578518, w: 0.9959229}
+      rotation: {x: 0.105644986, y: -0.06757855, z: -0.034740977, w: 0.99149656}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandThumb1
       parentName: PT_RightHand
       position: {x: -0.039642, y: -0.032029, z: -0.017624}
-      rotation: {x: -0.28006372, y: 0.09181332, z: -0.23403172, w: 0.9264792}
+      rotation: {x: -0.26448402, y: -0.10570674, z: -0.25754723, w: 0.923333}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandThumb2
       parentName: PT_RightHandThumb1
       position: {x: -0.009660999, y: -0.062649995, z: -0.008649}
-      rotation: {x: 0.06425733, y: 0.07541395, z: -0.1840662, w: 0.9779077}
+      rotation: {x: 0.060511604, y: 0.19470865, z: -0.17070973, w: 0.9639944}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandThumb3
       parentName: PT_RightHandThumb2
@@ -604,12 +604,12 @@ ModelImporter:
     - name: PT_RightHandIndex1
       parentName: PT_RightHand
       position: {x: -0.033898998, y: -0.092781, z: 0.0056999996}
-      rotation: {x: 0.055952918, y: -0.0012002883, z: -0.011919993, w: 0.9983616}
+      rotation: {x: 0.05464243, y: -0.018365392, z: 0.0131876, w: 0.99825}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandIndex2
       parentName: PT_RightHandIndex1
       position: {x: -0.000968, y: -0.042751998, z: 0.001053}
-      rotation: {x: -0.022441788, y: 0.00013316948, z: -0.024719415, w: 0.99944246}
+      rotation: {x: -0.025380045, y: 0.022391165, z: -0.024579257, w: 0.99912477}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandIndex3
       parentName: PT_RightHandIndex2
@@ -619,12 +619,12 @@ ModelImporter:
     - name: PT_RightHandMiddle1
       parentName: PT_RightHand
       position: {x: -0.006664, y: -0.105546, z: 0.0064789997}
-      rotation: {x: 0.05660211, y: -0.0032257505, z: -0.035704598, w: 0.99775296}
+      rotation: {x: 0.058308598, y: 0.020765314, z: -0.016033867, w: 0.99795383}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandMiddle2
       parentName: PT_RightHandMiddle1
       position: {x: 0.001069, y: -0.043068, z: 0.001119}
-      rotation: {x: -0.071441986, y: -0.0073818015, z: -0.017370597, w: 0.99726623}
+      rotation: {x: -0.07876134, y: 0.00037287336, z: -0.015339982, w: 0.99677545}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandMiddle3
       parentName: PT_RightHandMiddle2
@@ -634,12 +634,12 @@ ModelImporter:
     - name: PT_RightHandRing1
       parentName: PT_RightHand
       position: {x: 0.020499, y: -0.101169005, z: 0.009757}
-      rotation: {x: 0.06444832, y: -0.011369173, z: -0.078759, w: 0.9947432}
+      rotation: {x: 0.057077993, y: 0.026370209, z: -0.04394196, w: 0.9970536}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandRing2
       parentName: PT_RightHandRing1
       position: {x: 0.004458, y: -0.040058, z: 0.001647}
-      rotation: {x: -0.024475433, y: -0.0076325303, z: 0.011946469, w: 0.99959993}
+      rotation: {x: -0.031445812, y: -0.033032358, z: 0.011548355, w: 0.9988927}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandRing3
       parentName: PT_RightHandRing2
@@ -649,12 +649,12 @@ ModelImporter:
     - name: PT_RightHandPinky1
       parentName: PT_RightHand
       position: {x: 0.0429, y: -0.09495, z: 0.0031279998}
-      rotation: {x: 0.21565603, y: -0.002491697, z: -0.010448046, w: 0.9764104}
+      rotation: {x: 0.21478096, y: 0.07670552, z: -0.006305809, w: 0.97362506}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandPinky2
       parentName: PT_RightHandPinky1
       position: {x: -0.00075, y: -0.028183, z: 0.010204}
-      rotation: {x: -0.092180826, y: 0.0062020496, z: 0.026461681, w: 0.99537134}
+      rotation: {x: -0.105991855, y: -0.07762119, z: 0.044922702, w: 0.9903145}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightHandPinky3
       parentName: PT_RightHandPinky2
@@ -669,32 +669,32 @@ ModelImporter:
     - name: PT_LeftShoulder
       parentName: PT_Spine3
       position: {x: -0.065679, y: 0.065528, z: -0.006743}
-      rotation: {x: 0.5800198, y: -0.39721674, z: 0.60964525, w: 0.3662358}
+      rotation: {x: 0.59889686, y: -0.3977409, z: 0.53067195, w: 0.4489009}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftArm
       parentName: PT_LeftShoulder
       position: {x: 0.0030669998, y: 0.117159, z: -0.027579}
-      rotation: {x: -0.18171908, y: -0.087505005, z: -0.082421385, w: 0.97597533}
+      rotation: {x: -0.05694058, y: 0.44372788, z: -0.038199782, w: 0.8935346}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftForeArm
       parentName: PT_LeftArm
       position: {x: -0.0016889999, y: 0.26940298, z: -0.037288997}
-      rotation: {x: -0.09780153, y: 0.008368365, z: -0.01085441, w: 0.99511164}
+      rotation: {x: -0.114854306, y: -0.006989954, z: 0.0017924602, w: 0.99335617}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHand
       parentName: PT_LeftForeArm
       position: {x: 0.0059539997, y: 0.261894, z: 0.012948}
-      rotation: {x: 0.1650926, y: -0.2589695, z: 0.1981999, w: 0.93080395}
+      rotation: {x: 0.06062284, y: 0.35911167, z: 0.105759665, w: 0.92529917}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandThumb1
       parentName: PT_LeftHand
       position: {x: 0.039642, y: 0.032029, z: 0.017624}
-      rotation: {x: -0.35144806, y: -0.076531276, z: -0.18643297, w: 0.91425925}
+      rotation: {x: 0.25728613, y: -0.23431371, z: -0.13289168, w: 0.9280306}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandThumb2
       parentName: PT_LeftHandThumb1
       position: {x: 0.009660999, y: 0.062649995, z: 0.008649}
-      rotation: {x: 0.063520335, y: 0.0758016, z: -0.18369032, w: 0.9779966}
+      rotation: {x: 0.066853836, y: -0.015583828, z: -0.19068481, w: 0.9792482}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandThumb3
       parentName: PT_LeftHandThumb2
@@ -704,12 +704,12 @@ ModelImporter:
     - name: PT_LeftHandIndex1
       parentName: PT_LeftHand
       position: {x: 0.033898998, y: 0.092781, z: -0.0056999996}
-      rotation: {x: 0.05595975, y: -0.001204505, z: -0.012006899, w: 0.9983601}
+      rotation: {x: 0.039581526, y: -0.1164802, z: -0.006787317, w: 0.9923808}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandIndex2
       parentName: PT_LeftHandIndex1
       position: {x: 0.000968, y: 0.042751998, z: -0.001053}
-      rotation: {x: -0.022435475, y: 0.0001347366, z: -0.024766974, w: 0.99944144}
+      rotation: {x: -0.04533976, y: 0.0032777854, z: -0.028720483, w: 0.99855334}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandIndex3
       parentName: PT_LeftHandIndex2
@@ -719,12 +719,12 @@ ModelImporter:
     - name: PT_LeftHandMiddle1
       parentName: PT_LeftHand
       position: {x: 0.006664, y: 0.105546, z: -0.0064789997}
-      rotation: {x: 0.056615923, y: -0.0032297953, z: -0.035789974, w: 0.9977491}
+      rotation: {x: 0.0405281, y: -0.06204252, z: -0.037053056, w: 0.9965617}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandMiddle2
       parentName: PT_LeftHandMiddle1
       position: {x: -0.001069, y: 0.043068, z: -0.001119}
-      rotation: {x: -0.07144209, y: -0.0073781046, z: -0.017416455, w: 0.99726546}
+      rotation: {x: -0.09355747, y: -0.01574475, z: -0.021581367, w: 0.9952554}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandMiddle3
       parentName: PT_LeftHandMiddle2
@@ -734,12 +734,12 @@ ModelImporter:
     - name: PT_LeftHandRing1
       parentName: PT_LeftHand
       position: {x: -0.020499, y: 0.101169005, z: -0.009757}
-      rotation: {x: 0.06445549, y: -0.011373397, z: -0.078844786, w: 0.994736}
+      rotation: {x: 0.04588787, y: -0.071992554, z: -0.078697726, w: 0.9932362}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandRing2
       parentName: PT_LeftHandRing1
       position: {x: -0.004458, y: 0.040058, z: -0.001647}
-      rotation: {x: -0.024476286, y: -0.0076315952, z: 0.011902697, w: 0.9996004}
+      rotation: {x: -0.04476162, y: -0.0029704333, z: 0.008557584, w: 0.9989566}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandRing3
       parentName: PT_LeftHandRing2
@@ -749,12 +749,12 @@ ModelImporter:
     - name: PT_LeftHandPinky1
       parentName: PT_LeftHand
       position: {x: -0.0429, y: 0.09495, z: -0.0031279998}
-      rotation: {x: 0.21334228, y: -0.009092149, z: 0.0013611424, w: 0.9769343}
+      rotation: {x: 0.19196364, y: 0.019658113, z: -0.012908607, w: 0.9811202}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandPinky2
       parentName: PT_LeftHandPinky1
       position: {x: 0.00075, y: 0.028183, z: -0.010204}
-      rotation: {x: -0.09321668, y: -0.00012459973, z: 0.015533661, w: 0.99552464}
+      rotation: {x: -0.11490882, y: -0.0008673459, z: 0.023585508, w: 0.9930957}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftHandPinky3
       parentName: PT_LeftHandPinky2
@@ -799,17 +799,17 @@ ModelImporter:
     - name: PT_LeftUpLeg
       parentName: PT_NPC_Hips
       position: {x: -0.073511, y: -0.098327994, z: -0.011282001}
-      rotation: {x: -0.0021024311, y: 0.14947477, z: 0.9887111, w: 0.010161161}
+      rotation: {x: -0.17332786, y: 0.10468138, z: 0.97705245, w: 0.06608885}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftLeg
       parentName: PT_LeftUpLeg
       position: {x: 0.0025029997, y: 0.420456, z: 0.0048339996}
-      rotation: {x: -0.24872282, y: 0.0072246664, z: 0.01796565, w: 0.96838117}
+      rotation: {x: -0.14919496, y: 0.115736976, z: 0.02360882, w: 0.9817273}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftFoot
       parentName: PT_LeftLeg
       position: {x: -0.000061, y: 0.404253, z: -0.013340999}
-      rotation: {x: 0.51644695, y: -0.007329891, z: -0.007936687, w: 0.85625106}
+      rotation: {x: 0.5168506, y: -0.08484409, z: 0.07525821, w: 0.84853}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_LeftToe
       parentName: PT_LeftFoot
@@ -824,17 +824,17 @@ ModelImporter:
     - name: PT_RightUpLeg
       parentName: PT_NPC_Hips
       position: {x: 0.073511, y: -0.098327994, z: -0.010342999}
-      rotation: {x: 0.10956344, y: 0.09599888, z: 0.9873493, w: -0.06262213}
+      rotation: {x: 0.021090906, y: 0.056430113, z: 0.994305, w: -0.08791124}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightLeg
       parentName: PT_RightUpLeg
       position: {x: -0.0025029997, y: 0.42042, z: 0.0058469996}
-      rotation: {x: -0.2472827, y: -0.077586785, z: -0.022341616, w: 0.96557367}
+      rotation: {x: -0.10174309, y: 0.08308813, z: -0.044397935, w: 0.9903401}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightFoot
       parentName: PT_RightLeg
       position: {x: 0.00006, y: 0.404271, z: -0.0130819995}
-      rotation: {x: 0.60445774, y: 0.10617794, z: -0.037085086, w: 0.7886583}
+      rotation: {x: 0.53067446, y: -0.025895461, z: -0.04190074, w: 0.84614325}
       scale: {x: 1, y: 1, z: 1}
     - name: PT_RightToe
       parentName: PT_RightFoot

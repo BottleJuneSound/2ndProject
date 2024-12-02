@@ -276,8 +276,8 @@ public class PlayerController : MonoBehaviour
     {
         if (lightAttackButton)
         {
-            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.6f;
-            lightAttackCollider.GetComponent<CapsuleCollider>().height = 2.6f;
+            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.3f;
+            lightAttackCollider.GetComponent<CapsuleCollider>().height = 1f;
             //lightAttackCollider.SetActive(true);
             moveAction.Disable();
             runAction.Disable();

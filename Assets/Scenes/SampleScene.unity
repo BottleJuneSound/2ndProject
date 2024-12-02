@@ -1865,7 +1865,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Speed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Enabled
@@ -1873,7 +1873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Acceleration
-      value: 0.8
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_StoppingDistance
@@ -4139,27 +4139,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5484429141282642019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3331656831693459728
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4861374233233511393}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.4
-  m_Center: {x: -0.00000008472701, y: 0, z: 0.00000024583784}
 --- !u!1 &3372565537055151560
 GameObject:
   m_ObjectHideFlags: 0
@@ -5024,7 +5003,6 @@ GameObject:
   - component: {fileID: 7974472294568477244}
   - component: {fileID: 1171794782693901495}
   - component: {fileID: 410469976851585100}
-  - component: {fileID: 3331656831693459728}
   - component: {fileID: 7974472294568477245}
   m_Layer: 0
   m_Name: Sphere
@@ -6595,10 +6573,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
-  m_Height: 2.6
+  m_Radius: 0.3
+  m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: -0.64, z: 0.000000008834653}
+  m_Center: {x: 0, y: -0.2, z: 0.000000008834653}
 --- !u!4 &8117292478615305905
 Transform:
   m_ObjectHideFlags: 0

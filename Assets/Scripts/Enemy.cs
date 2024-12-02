@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player == null || agent.isStopped == true) return;
+        if (player == null || agent.isStopped == true || isBossDown) return;
 
         // 플레이어 위치가 이전 위치와 달라졌을 때만 갱신
         if (Vector3.Distance(lastPlayerPosition, player.transform.position) > 1)
@@ -49,16 +49,21 @@ public class Enemy : MonoBehaviour
         //보스 오브젝트 비활성화시 에러를 방지하기 위한 조건
         if (agent.enabled == true)
         {
-            agent.isStopped = true;
             isBossDown = true;
             GetComponent<Animator>().SetTrigger("BossHit");
+            Debug.Log(agent.isStopped);
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+
 
             //agent.enabled = false;        //이부분은 추후 살려낼 코드! 한번에 없어지지말고 점진적으로 사라져야함!
             //Invoke("BossSpawn", 5f);      //보스 스폰 메서드 제작 후 그곳에서 에이전트 활성화 후 보스무브 메서드로 넘기기
-                                            //스폰될때도 점진적으로 스폰시키기!
+            //스폰될때도 점진적으로 스폰시키기!
         }
         else
         {
+            Debug.Log("여기로 오는거 아니지?");
+
             return;
         }
 
@@ -68,11 +73,10 @@ public class Enemy : MonoBehaviour
     {
         isRangeOut = false;
         isBossDown = false;
-        triggerTime = 1f;
-        agent.speed = 5f;
-        agent.acceleration = 0.8f;
-        agent.stoppingDistance = 5;
-
+        //triggerTime = 1f;
+        //agent.speed = 5f;
+        //agent.acceleration = 0.8f;
+        //agent.stoppingDistance = 5;
         Invoke("BossMove", 5f);
     }
 
@@ -83,6 +87,10 @@ public class Enemy : MonoBehaviour
             if (isBossDown == true) return;
 
             agent.isStopped = false;
+            triggerTime = 1f;
+            agent.speed = 10f;
+            agent.acceleration = 8f;
+            agent.stoppingDistance = 5;
             lastPlayerPosition = player.transform.position; // 최신 위치 저장
             agent.destination = lastPlayerPosition; // 목적지 갱신
             GetComponent<Animator>().SetTrigger("BossIdle");
@@ -100,6 +108,8 @@ public class Enemy : MonoBehaviour
             agent.acceleration = 0.1f;
             agent.speed = 0.3f;
             triggerLight = true;
+
+            if (triggerLight) agent.velocity = Vector3.zero;
             
             //isRangeOut = true;
             //Debug.Log(agent.speed);

@@ -88,8 +88,8 @@ public class Enemy : MonoBehaviour
 
             agent.isStopped = false;
             triggerTime = 1f;
-            agent.speed = 10f;
-            agent.acceleration = 8f;
+            agent.speed = 7;
+            agent.acceleration = 3f;
             agent.stoppingDistance = 5;
             lastPlayerPosition = player.transform.position; // 최신 위치 저장
             agent.destination = lastPlayerPosition; // 목적지 갱신
@@ -105,12 +105,21 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Light"))
         {
-            agent.acceleration = 0.1f;
-            agent.speed = 0.3f;
+            
             triggerLight = true;
 
-            if (triggerLight) agent.velocity = Vector3.zero;
-            
+            if (triggerLight)
+            {
+                agent.velocity = Vector3.zero;
+
+
+                if(agent.stoppingDistance < 5)
+                {
+                    Debug.Log("작동하나요?");
+                    //보스 앞으로 손뻗는 애니메이션 넣기
+                }
+                
+            }
             //isRangeOut = true;
             //Debug.Log(agent.speed);
 
@@ -132,8 +141,9 @@ public class Enemy : MonoBehaviour
                                                         //그래서 한번 쓰러진 적을 계속 잡아놓을 수 있는 부분이기도 함.
                                                         //이후 이부분 활용해서 일정시간이 지나면 보스 재소환 할 수 있을듯!
 
-            if (triggerTime < 0 && agent.stoppingDistance > 2)
+            if (triggerTime < 0 && agent.stoppingDistance < 4)
             {
+                Debug.Log("보스다운 조건 도달");
                 isRangeOut = true;
                 BossDown();
             }

@@ -1865,7 +1865,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Speed
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Enabled
@@ -1873,7 +1873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Acceleration
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_StoppingDistance
@@ -1941,7 +1941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6172152702710911054, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Radius
-      value: 1.2
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6172152702710911054, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Enabled

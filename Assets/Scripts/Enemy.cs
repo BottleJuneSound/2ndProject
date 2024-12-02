@@ -51,10 +51,10 @@ public class Enemy : MonoBehaviour
         {
             isBossDown = true;
             GetComponent<Animator>().SetTrigger("BossHit");
-            Debug.Log(agent.isStopped);
+            //Debug.Log(agent.isStopped);
             agent.isStopped = true;
             agent.velocity = Vector3.zero;
-
+            EndDown();
 
             //agent.enabled = false;        //이부분은 추후 살려낼 코드! 한번에 없어지지말고 점진적으로 사라져야함!
             //Invoke("BossSpawn", 5f);      //보스 스폰 메서드 제작 후 그곳에서 에이전트 활성화 후 보스무브 메서드로 넘기기

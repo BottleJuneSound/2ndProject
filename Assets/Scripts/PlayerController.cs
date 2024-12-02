@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = true;
         //lightAttackCollider.SetActive(false);
 
+        lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+        lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
+
         //actions는 InputActionAsset타입 이다.
         //인풋시스템의 동작을 관리하는 변수명임
         InputActionAsset inputActions = GetComponent<PlayerInput>().actions;
@@ -81,6 +84,7 @@ public class PlayerController : MonoBehaviour
         lightAttack = inputActions.FindAction("Attack");
 
         characterController = GetComponent<CharacterController>();
+        GetComponent<Animator>().SetTrigger("PlayerIdle");
 
         stateMachine.Initialize(stateMachine.idleState);
         oriText = npcText.text;

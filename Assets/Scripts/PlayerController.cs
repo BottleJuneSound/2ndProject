@@ -277,9 +277,15 @@ public class PlayerController : MonoBehaviour
         if (lightAttackButton)
         {
             lightAttackCollider.SetActive(true);
+            moveAction.Disable();
+            runAction.Disable();
+            skillMAction.Disable();
+            skillNAction.Disable();
+            skillBAction.Disable();
+            interactiveAction.Disable();
+            closePopupAction.Disable();
             OnLightAttack();
 
-            Debug.Log("올바르게 켜는중");
             //Invoke("EndLightAttack", 3f);
         }
     }
@@ -287,8 +293,14 @@ public class PlayerController : MonoBehaviour
     public void EndLightAttack()
     {
         lightAttackCollider.SetActive(false);
+        moveAction.Enable();
+        runAction.Enable();
+        skillMAction.Enable();
+        skillNAction.Enable();
+        skillBAction.Enable();
+        interactiveAction.Enable();
+        closePopupAction.Enable();
         OnIdle();
-        Debug.Log("올바르게 전원 끄는중");
     }
 
     public void OnLightAttack()

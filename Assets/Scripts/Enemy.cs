@@ -10,11 +10,9 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent agent;
     private Vector3 lastPlayerPosition; // 이전 플레이어 위치 저장
     bool isBossDown = false;   // BossDown 실행 상태를 나타내는 플래그
-    bool isRangeOut = false;    // 콜라이더 충돌에서 벗어난 경우 속도, 타이머 초기화를 위한 상태변수
+    public bool isRangeOut = false;    // 콜라이더 충돌에서 벗어난 경우 속도, 타이머 초기화를 위한 상태변수
     public float triggerTime = 2f;
     public bool triggerLight = false;
-    
-
 
 
     void Start()
@@ -45,17 +43,14 @@ public class Enemy : MonoBehaviour
 
         }
 
-    }
-
-    public void SetBossSpeed()  //플레이어와 상호작용 상태에 따라 이동 속도, 보스다운 타이머 초기화 하는 메서드
-    {
-        isRangeOut = false;
-        isBossDown = false;
-        triggerTime = 0.5f;
-        agent.speed = 5f;
-        agent.acceleration = 0.8f;
-        agent.stoppingDistance = 5;
-        //GetComponent<Animator>().SetTrigger("BossIdle");
+        //if (isRangeOut)
+        //{
+        //    EndDown();
+        //}
+        //if (!isRangeOut)
+        //{
+        //    SetBossSpeed();
+        //}
 
     }
 
@@ -66,9 +61,10 @@ public class Enemy : MonoBehaviour
         {
             agent.isStopped = true;
             isBossDown = true;
+            Debug.Log(isBossDown);
             GetComponent<Animator>().SetTrigger("BossHit");
-            Invoke("SetBossSpeed", 5f);
-            Invoke("BossMove", 5f);
+            //Invoke("SetBossSpeed", 5f);
+            //Invoke("BossMove", 5f);
 
         }
         else
@@ -86,9 +82,23 @@ public class Enemy : MonoBehaviour
         agent.acceleration = 0.8f;
         agent.stoppingDistance = 5;
 
+        //Invoke("BossMove", 5f);
+    }
+    public void SetBossSpeed()  
+        //플레이어와 상호작용 상태에 따라 이동 속도, 보스다운 타이머 초기화 하는 메서드
+        //보스 다운 후 레인지 벗어나면 초기화(보스 일어나게)하는 메서드
+    {
+        isRangeOut = false;
+        isBossDown = false;
+        triggerTime = 0.5f;
+        agent.speed = 5f;
+        agent.acceleration = 0.8f;
+        agent.stoppingDistance = 5;
+        //GetComponent<Animator>().SetTrigger("BossIdle");
         Invoke("BossMove", 5f);
 
     }
+
     public void BossMove()
     {
         if (agent.enabled == true)  //보스 오브젝트 비활성화시 에러를 방지하기 위한 조건
@@ -111,9 +121,10 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Light"))
         {
             agent.acceleration = 0.1f;
-            agent.speed = 0.5f;
+            agent.speed = 0.3f;
             triggerLight = true;
-            isRangeOut = true;
+            
+            //isRangeOut = true;
             //Debug.Log(agent.speed);
 
             //isBossDown = true;
@@ -134,6 +145,7 @@ public class Enemy : MonoBehaviour
 
             if (triggerTime < 0 && agent.stoppingDistance > 2)
             {
+                Debug.Log("00");
                 isRangeOut = true;
                 BossDown();
             }
@@ -152,10 +164,14 @@ public class Enemy : MonoBehaviour
         {
             if (isRangeOut)
             {
-
+                Debug.Log("11");
                 EndDown();
-
             }
+            if (!isRangeOut)
+            {
+                SetBossSpeed();
+            }
+
         }
     }
 }

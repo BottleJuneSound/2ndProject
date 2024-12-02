@@ -1982,6 +1982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 625974743985599995}
   agent: {fileID: 1953779274}
+  isRangeOut: 0
   triggerTime: 0.5
   triggerLight: 0
 --- !u!195 &1953779274 stripped

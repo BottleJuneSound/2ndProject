@@ -10,6 +10,7 @@ public class LightFindState : IState
     }
     public void Enter()
     {
+        //player.GetComponent<Animator>().SetTrigger("LightFind");
         player.GetComponent<Animator>().SetBool("LightFindBool", true);
         //Debug.Log("11");
     }
@@ -20,8 +21,8 @@ public class LightFindState : IState
 
     public void Exit()
     {
+        //player.GetComponent<Animator>().SetTrigger("LightFind");
         player.GetComponent<Animator>().SetBool("LightFindBool", false);
-
     }
 
 }

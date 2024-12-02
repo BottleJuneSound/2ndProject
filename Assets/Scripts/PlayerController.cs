@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public GameObject buttonM;
     public GameObject buttonN;
     public GameObject buttonB;
-    public GameObject lightAttackCollider;
+    public CapsuleCollider lightAttackCollider;
 
     public TMP_Text npcText;
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         // 나중에 커서이미지로 바꿔보자. 시점 변환을 위한 마우스이기 때문에 없어도?
         Cursor.visible = true;
-        lightAttackCollider.SetActive(false);
+        //lightAttackCollider.SetActive(false);
 
         //actions는 InputActionAsset타입 이다.
         //인풋시스템의 동작을 관리하는 변수명임
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
         {
             if (onSkillM)
             {
-                //buttonM.GetComponent<Image>().color = Color.clear / Time.deltaTime;       // 점진전으로 a값 증가 시킬 수 있는 방법 찾기
+                //buttonM.GetComponent<Image>().color = Color.clear / Time.deltaTime;       // 점진적으로 a값 증가 시킬 수 있는 방법 찾기
                 skillActive = true;
                 currentText = "약물치료를 시행하였습니다.";
                 npcText.text = currentText;
@@ -276,7 +276,9 @@ public class PlayerController : MonoBehaviour
     {
         if (lightAttackButton)
         {
-            lightAttackCollider.SetActive(true);
+            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.6f;
+            lightAttackCollider.GetComponent<CapsuleCollider>().height = 2.6f;
+            //lightAttackCollider.SetActive(true);
             moveAction.Disable();
             runAction.Disable();
             skillMAction.Disable();
@@ -292,7 +294,9 @@ public class PlayerController : MonoBehaviour
 
     public void EndLightAttack()
     {
-        lightAttackCollider.SetActive(false);
+        lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+        lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
+        //lightAttackCollider.SetActive(false);
         moveAction.Enable();
         runAction.Enable();
         skillMAction.Enable();

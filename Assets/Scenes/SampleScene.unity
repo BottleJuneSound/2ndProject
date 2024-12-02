@@ -1983,7 +1983,7 @@ MonoBehaviour:
   player: {fileID: 625974743985599995}
   agent: {fileID: 1953779274}
   isRangeOut: 0
-  triggerTime: 0.5
+  triggerTime: 1
   triggerLight: 0
 --- !u!195 &1953779274 stripped
 NavMeshAgent:
@@ -2945,7 +2945,7 @@ MonoBehaviour:
   buttonM: {fileID: 2341030263671667519}
   buttonN: {fileID: 3965035747847322721}
   buttonB: {fileID: 5279169499728289085}
-  lightAttackCollider: {fileID: 4861374233233511393}
+  lightAttackCollider: {fileID: 7974472294568477245}
   npcText: {fileID: 2072525126}
   playerAngle: {fileID: 4640104867210170690}
   walkingSpeed: 2
@@ -5032,7 +5032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4889914842849465570
 RectTransform:
   m_ObjectHideFlags: 0

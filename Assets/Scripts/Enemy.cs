@@ -42,16 +42,6 @@ public class Enemy : MonoBehaviour
             BossMove();
 
         }
-
-        //if (isRangeOut)
-        //{
-        //    EndDown();
-        //}
-        //if (!isRangeOut)
-        //{
-        //    SetBossSpeed();
-        //}
-
     }
 
     public void BossDown()
@@ -61,11 +51,11 @@ public class Enemy : MonoBehaviour
         {
             agent.isStopped = true;
             isBossDown = true;
-            Debug.Log(isBossDown);
             GetComponent<Animator>().SetTrigger("BossHit");
-            //Invoke("SetBossSpeed", 5f);
-            //Invoke("BossMove", 5f);
 
+            //agent.enabled = false;        //이부분은 추후 살려낼 코드! 한번에 없어지지말고 점진적으로 사라져야함!
+            //Invoke("BossSpawn", 5f);      //보스 스폰 메서드 제작 후 그곳에서 에이전트 활성화 후 보스무브 메서드로 넘기기
+                                            //스폰될때도 점진적으로 스폰시키기!
         }
         else
         {
@@ -74,29 +64,16 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void EndDown()   //보스가 다운 후 플레이어가 범위안에 있다면 바로 일어서지 않도록 하는 메서드
-    {
-        isBossDown = false;
-        triggerTime = 0.5f;
-        agent.speed = 5f;
-        agent.acceleration = 0.8f;
-        agent.stoppingDistance = 5;
-
-        //Invoke("BossMove", 5f);
-    }
-    public void SetBossSpeed()  
-        //플레이어와 상호작용 상태에 따라 이동 속도, 보스다운 타이머 초기화 하는 메서드
-        //보스 다운 후 레인지 벗어나면 초기화(보스 일어나게)하는 메서드
+    public void EndDown()   //때리다가 멈추면 초기화 해주는 곳.완전히 다운되고 영역을 벗어났을때 초기화 해주기도한다. 아직 불안정한 메서드
     {
         isRangeOut = false;
         isBossDown = false;
-        triggerTime = 0.5f;
+        triggerTime = 1f;
         agent.speed = 5f;
         agent.acceleration = 0.8f;
         agent.stoppingDistance = 5;
-        //GetComponent<Animator>().SetTrigger("BossIdle");
-        Invoke("BossMove", 5f);
 
+        Invoke("BossMove", 5f);
     }
 
     public void BossMove()
@@ -141,35 +118,29 @@ public class Enemy : MonoBehaviour
         if(triggerLight && other.CompareTag("Light"))
         {
             triggerTime -= Time.deltaTime;
-            agent.stoppingDistance -= Time.deltaTime;
+            agent.stoppingDistance -= Time.deltaTime;   //이 부분에서 클릭을 계속하고 있다면 타이머가 계속 음수로 진행됨.
+                                                        //그래서 한번 쓰러진 적을 계속 잡아놓을 수 있는 부분이기도 함.
+                                                        //이후 이부분 활용해서 일정시간이 지나면 보스 재소환 할 수 있을듯!
 
             if (triggerTime < 0 && agent.stoppingDistance > 2)
             {
-                Debug.Log("00");
                 isRangeOut = true;
                 BossDown();
             }
         }
-        //else
-        //{
-        //    triggerLight = true;
-        //    triggerTime = 2f;
-        //    BossMove();
-        //}
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Light"))
         {
+            triggerLight = false;
+
             if (isRangeOut)
             {
-                Debug.Log("11");
-                EndDown();
-            }
-            if (!isRangeOut)
-            {
-                SetBossSpeed();
+                EndDown();  // 때리다가 멈추면 초기화 해주는 곳. 완전히 다운되고 영역을 벗어났을때 초기화 해주기도한다.
+                            // 그래서 애니메이션이 씹히는 에러가 존재하나?
             }
 
         }

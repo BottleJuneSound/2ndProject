@@ -95,7 +95,6 @@ public class NPC : MonoBehaviour
                 Invoke("SetQuiz", 3f);
 
                 //return;
-
             }
             else if(!isSkillMatch)
             {

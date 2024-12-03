@@ -1951,6 +1951,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8814645819259795829, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9076470396325068716, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1981,10 +1985,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 625974743985599995}
+  boss: {fileID: 1953779270}
   agent: {fileID: 1953779274}
   isRangeOut: 0
   triggerTime: 1
   triggerLight: 0
+  bossAnimEnd: 0
 --- !u!195 &1953779274 stripped
 NavMeshAgent:
   m_CorrespondingSourceObject: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}

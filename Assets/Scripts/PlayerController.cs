@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     public GameObject buttonM;
     public GameObject buttonN;
     public GameObject buttonB;
+    public GameObject importAlarm;
+    public CapsuleCollider lightAttackCollider;
+    public ItemManager itemManager;
 
     public TMP_Text npcText;
 
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public InputAction skillBAction;
     InputAction closePopupAction;
     public InputAction interactiveAction;
+    InputAction lightAttackAction;
 
     public string oriText;
     public string currentText;
@@ -48,6 +52,8 @@ public class PlayerController : MonoBehaviour
     public bool onClose = false;
 
     public bool skillActive = false;
+    public bool lightAttackButton = false;
+    public bool isAttack = false;
     CharacterController characterController;    //이거 유니티 기능임. 내가만든 스크립트아님 ㅠ
 
     private void Awake()
@@ -61,6 +67,10 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         // 나중에 커서이미지로 바꿔보자. 시점 변환을 위한 마우스이기 때문에 없어도?
         Cursor.visible = true;
+        //lightAttackCollider.SetActive(false);
+
+        lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+        lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
 
         //actions는 InputActionAsset타입 이다.
         //인풋시스템의 동작을 관리하는 변수명임
@@ -73,11 +83,19 @@ public class PlayerController : MonoBehaviour
         skillBAction = inputActions.FindAction("SkillB");
         interactiveAction = inputActions.FindAction("Interact");
         closePopupAction = inputActions.FindAction("Exit");
+        lightAttackAction = inputActions.FindAction("Attack");
 
         characterController = GetComponent<CharacterController>();
+        GetComponent<Animator>().SetTrigger("PlayerIdle");
 
         stateMachine.Initialize(stateMachine.idleState);
         oriText = npcText.text;
+        importAlarm.SetActive(false);
+
+        //if (itemManager == null)
+        //{
+        //    itemManager = FindObjectOfType<ItemManager>();
+        //}
 
         if (cineCam == null)
         {
@@ -128,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
         move = moveDir * currentSpeed * Time.deltaTime;
 
-        if (!moveAction.IsPressed())
+        if (!moveAction.IsPressed() && !isAttack)
         {
             OnIdle();
         }
@@ -156,7 +174,7 @@ public class PlayerController : MonoBehaviour
         {
             if (skillMAction.IsPressed() && pressPanel.activeSelf)
             {
-                if(skillActive) return;
+                if (skillActive) return;
                 onSkillM = true;
                 OnMedicine();
 
@@ -176,7 +194,7 @@ public class PlayerController : MonoBehaviour
                 OnBloodWithdrawal();
             }
 
-            if(closePopupAction.IsPressed() && pressPanel.activeSelf)
+            if (closePopupAction.IsPressed() && pressPanel.activeSelf)
             {
                 ClosePopup();
                 onClose = true;
@@ -189,10 +207,12 @@ public class PlayerController : MonoBehaviour
         {
             if (onSkillM)
             {
-                //buttonM.GetComponent<Image>().color = Color.clear / Time.deltaTime;       // 점진전으로 a값 증가 시킬 수 있는 방법 찾기
+                //buttonM.GetComponent<Image>().color = Color.clear / Time.deltaTime;       // 점진적으로 a값 증가 시킬 수 있는 방법 찾기
                 skillActive = true;
                 currentText = "약물치료를 시행하였습니다.";
                 npcText.text = currentText;
+
+                GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillN)
@@ -200,6 +220,8 @@ public class PlayerController : MonoBehaviour
                 skillActive = true;
                 currentText = "기도를 시행하였습니다.";
                 npcText.text = currentText;
+
+                //GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillB)
@@ -207,6 +229,8 @@ public class PlayerController : MonoBehaviour
                 skillActive = true;
                 currentText = "방혈치료를 시행하였습니다.";
                 npcText.text = currentText;
+
+                //GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
 
@@ -214,6 +238,23 @@ public class PlayerController : MonoBehaviour
             {
                 npcText.text = oriText;
             }
+        }
+
+        if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.lightCounter > 0)
+        {
+            //Debug.Log("반환중");
+            //if (lightAttackButton) return;
+            Debug.Log(itemManager.lightCounter);
+            isAttack = true;
+            lightAttackButton = true;
+            //Debug.Log("작동중");
+            LightAttack();
+        }
+        else if (lightAttackAction.WasReleasedThisFrame())
+        {
+            isAttack = false;
+            lightAttackButton = false;
+            EndLightAttack();
         }
 
 
@@ -229,6 +270,24 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void GetItemPopup()  //아이템 카운터에 1만큼 더해지는 변화가 발생하면 동작. 현재 오류 있음
+    {
+        if (itemManager.lightCounter == itemManager.beforLightCounter + 1)
+        {
+            importAlarm.SetActive(true);
+        }
+
+        if (itemManager.matcheCounter == itemManager.beforMatcheCounter + 1)
+        {
+            importAlarm.SetActive(true);
+        }
+
+        if (itemManager.potionCounter == itemManager.beforPotionCounter + 1)
+        {
+            importAlarm.SetActive(true);
+        }
+    }
+
     public void ResetAllSkill() //스킬 상태 초기화
     {
         if (skillActive)
@@ -239,6 +298,8 @@ public class PlayerController : MonoBehaviour
             loadM.gameObject.SetActive(false);
             loadN.gameObject.SetActive(false);
             loadB.gameObject.SetActive(false);
+            importAlarm.SetActive(false);
+
 
 
 
@@ -249,6 +310,46 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void LightAttack()   //지속적인 키 입력은 bool타입으로 처리함 
+    {
+        if (lightAttackButton)
+        {
+            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.3f;
+            lightAttackCollider.GetComponent<CapsuleCollider>().height = 1f;
+            //lightAttackCollider.SetActive(true);
+            moveAction.Disable();
+            runAction.Disable();
+            skillMAction.Disable();
+            skillNAction.Disable();
+            skillBAction.Disable();
+            interactiveAction.Disable();
+            closePopupAction.Disable();
+            itemManager.OnSpendLight();
+            OnLightAttack();
+
+            //Invoke("EndLightAttack", 3f);
+        }
+    }
+
+    public void EndLightAttack()
+    {
+        lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+        lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
+        //lightAttackCollider.SetActive(false);
+        moveAction.Enable();
+        runAction.Enable();
+        skillMAction.Enable();
+        skillNAction.Enable();
+        skillBAction.Enable();
+        interactiveAction.Enable();
+        closePopupAction.Enable();
+        OnIdle();
+    }
+
+    public void OnLightAttack()
+    {
+        stateMachine.TransitionTo(stateMachine.lightFindState);
+    }
     public void OnIdle()
     {
         stateMachine.TransitionTo(stateMachine.idleState);
@@ -291,7 +392,7 @@ public class PlayerController : MonoBehaviour
 
     public void ClosePopup()    // 창을 비활성화 하고 인터렉티브 해제 메서드 실행
     {
-        if(onClose == true) return;
+        if (onClose == true) return;
         popupPanel.SetActive(false);
         OffInteractive();
 
@@ -299,9 +400,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteractive()
     {
-        if(activeInteract == true) return;
+        if (activeInteract == true) return;
 
         Debug.Log("상호작용을 시작합니다.");
+        lightAttackAction.Disable();
         activeInteract = true;
         cineCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -311,9 +413,10 @@ public class PlayerController : MonoBehaviour
 
     public void OffInteractive()
     {
-        if(activeInteract == false) return;
+        if (activeInteract == false) return;
 
         Debug.Log("상호작용이 종료되었습니다.");
+        lightAttackAction.Enable();
         if (interactiveAction.IsPressed()) activeInteract = false;
         cineCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;

@@ -8,6 +8,7 @@ public class StateMachine
     public IdleState idleState;
     public WalkState walkState;
     public RunState runState;
+    public LightFindState lightFindState;
 
     public StateMachine(PlayerController player)
     {
@@ -16,6 +17,7 @@ public class StateMachine
         idleState = new IdleState(player);
         walkState = new WalkState(player);
         runState = new RunState(player);
+        lightFindState = new LightFindState(player);
     }
 
     public void Initialize(IState state)

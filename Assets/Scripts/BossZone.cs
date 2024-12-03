@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class BossZone : MonoBehaviour
 {
@@ -7,12 +8,11 @@ public class BossZone : MonoBehaviour
     public GameObject bossFightCam;
     public GameObject playerCam;
     public GameObject boss;
+    public GameObject globalVol;
 
     void Start()
     {
-     boss.SetActive(false);
-
-
+        boss.SetActive(false);        
     }
 
     void Update()

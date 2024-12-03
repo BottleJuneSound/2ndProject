@@ -11,6 +11,7 @@ public class IdleState : IState
     public void Enter()
     {
         player.GetComponent<Animator>().SetTrigger("PlayerIdle");
+        //Debug.Log("00");
     }
 
     public void Execute()

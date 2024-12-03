@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
     public GameObject buttonM;
     public GameObject buttonN;
     public GameObject buttonB;
+    public GameObject importAlarm;
     public CapsuleCollider lightAttackCollider;
+    public ItemManager itemManager;
 
     public TMP_Text npcText;
 
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour
     public InputAction skillBAction;
     InputAction closePopupAction;
     public InputAction interactiveAction;
-    InputAction lightAttack;
+    InputAction lightAttackAction;
 
     public string oriText;
     public string currentText;
@@ -81,13 +83,19 @@ public class PlayerController : MonoBehaviour
         skillBAction = inputActions.FindAction("SkillB");
         interactiveAction = inputActions.FindAction("Interact");
         closePopupAction = inputActions.FindAction("Exit");
-        lightAttack = inputActions.FindAction("Attack");
+        lightAttackAction = inputActions.FindAction("Attack");
 
         characterController = GetComponent<CharacterController>();
         GetComponent<Animator>().SetTrigger("PlayerIdle");
 
         stateMachine.Initialize(stateMachine.idleState);
         oriText = npcText.text;
+        importAlarm.SetActive(false);
+
+        //if (itemManager == null)
+        //{
+        //    itemManager = FindObjectOfType<ItemManager>();
+        //}
 
         if (cineCam == null)
         {
@@ -203,6 +211,8 @@ public class PlayerController : MonoBehaviour
                 skillActive = true;
                 currentText = "약물치료를 시행하였습니다.";
                 npcText.text = currentText;
+
+                GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillN)
@@ -210,6 +220,8 @@ public class PlayerController : MonoBehaviour
                 skillActive = true;
                 currentText = "기도를 시행하였습니다.";
                 npcText.text = currentText;
+
+                //GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillB)
@@ -217,6 +229,8 @@ public class PlayerController : MonoBehaviour
                 skillActive = true;
                 currentText = "방혈치료를 시행하였습니다.";
                 npcText.text = currentText;
+
+                //GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
 
@@ -226,17 +240,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (lightAttack.WasPressedThisFrame() && !isAttack)
+        if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.lightCounter > 0)
         {
             //Debug.Log("반환중");
             //if (lightAttackButton) return;
-
+            Debug.Log(itemManager.lightCounter);
             isAttack = true;
             lightAttackButton = true;
             //Debug.Log("작동중");
             LightAttack();
         }
-        else if (lightAttack.WasReleasedThisFrame())
+        else if (lightAttackAction.WasReleasedThisFrame())
         {
             isAttack = false;
             lightAttackButton = false;
@@ -256,6 +270,24 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void GetItemPopup()  //아이템 카운터에 1만큼 더해지는 변화가 발생하면 동작. 현재 오류 있음
+    {
+        if (itemManager.lightCounter == itemManager.beforLightCounter + 1)
+        {
+            importAlarm.SetActive(true);
+        }
+
+        if (itemManager.matcheCounter == itemManager.beforMatcheCounter + 1)
+        {
+            importAlarm.SetActive(true);
+        }
+
+        if (itemManager.potionCounter == itemManager.beforPotionCounter + 1)
+        {
+            importAlarm.SetActive(true);
+        }
+    }
+
     public void ResetAllSkill() //스킬 상태 초기화
     {
         if (skillActive)
@@ -266,6 +298,8 @@ public class PlayerController : MonoBehaviour
             loadM.gameObject.SetActive(false);
             loadN.gameObject.SetActive(false);
             loadB.gameObject.SetActive(false);
+            importAlarm.SetActive(false);
+
 
 
 
@@ -290,6 +324,7 @@ public class PlayerController : MonoBehaviour
             skillBAction.Disable();
             interactiveAction.Disable();
             closePopupAction.Disable();
+            itemManager.OnSpendLight();
             OnLightAttack();
 
             //Invoke("EndLightAttack", 3f);
@@ -368,6 +403,7 @@ public class PlayerController : MonoBehaviour
         if (activeInteract == true) return;
 
         Debug.Log("상호작용을 시작합니다.");
+        lightAttackAction.Disable();
         activeInteract = true;
         cineCam.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -380,6 +416,7 @@ public class PlayerController : MonoBehaviour
         if (activeInteract == false) return;
 
         Debug.Log("상호작용이 종료되었습니다.");
+        lightAttackAction.Enable();
         if (interactiveAction.IsPressed()) activeInteract = false;
         cineCam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;

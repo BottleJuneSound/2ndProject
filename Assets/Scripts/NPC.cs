@@ -1,17 +1,27 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
     //public GameObject pressPanel;
-    public npcNeedSkill currentNeedSkill;
+    public NpcNeedSkill currentNeedSkill;
+    public ItemSkill giftItemSkill;
     public bool nowInteracting = false;
     public bool hasUsedSkill = false;
+    public ItemManager itemManager;
 
-    public enum npcNeedSkill
+
+    public enum NpcNeedSkill
     {
         medicine,
         blood,
         pray
+    }
+    public enum ItemSkill
+    {
+        light,
+        matche,
+        potion
     }
 
 
@@ -33,7 +43,7 @@ public class NPC : MonoBehaviour
         //Debug.Log(playerController.activeInteract);
 
         // NPC가 원하는 상호작용을 랜덤으로 설정(예시)
-        currentNeedSkill = (npcNeedSkill)Random.Range(0, 3);
+        currentNeedSkill = (NpcNeedSkill)Random.Range(0, 3);
         Debug.Log($"NPC 상호작용 정답: {gameObject.name} + {currentNeedSkill}");
 
     }
@@ -54,12 +64,33 @@ public class NPC : MonoBehaviour
         {
             //Debug.Log(CheckSkillMatch());
             bool isSkillMatch = CheckSkillMatch();  //메서드를 변수로 변환하여 중복 호출을 해결함.
+            Debug.Log(isSkillMatch);
             hasUsedSkill = true;    //이것도 있어야 중복호출 방지할 수 있음
 
             // NPC가 원하는 스킬이 맞는지 확인
             if (isSkillMatch)
             {
                 Debug.Log($"정답 입니다. NPC: {gameObject.name}");
+                giftItemSkill = (ItemSkill)Random.Range(0, 2);
+
+                if(giftItemSkill == ItemSkill.light)
+                {
+                    itemManager.GetLightItem();
+                }
+                if (giftItemSkill == ItemSkill.matche)
+                {
+                    itemManager.GetMatcheItem();
+                }
+                if (giftItemSkill == ItemSkill.potion)
+                {
+                    itemManager.GetPotionItem();
+                }
+                else
+                {
+                    Debug.Log("리턴 할 일이 있나?");   // 정답을 맞추면 일로 오네???
+                    return;
+                }
+
                 //hasUsedSkill = true;
                 Invoke("SetQuiz", 3f);
 
@@ -99,19 +130,19 @@ public class NPC : MonoBehaviour
     private bool CheckSkillMatch()
     {
         //Debug.Log(playerController.onSkillM);
-        if (currentNeedSkill == npcNeedSkill.medicine && playerController.skillMAction.IsPressed())
+        if (currentNeedSkill == NpcNeedSkill.medicine && playerController.skillMAction.IsPressed())
         {
             //playerController.onSkillM = false;
             Debug.Log("11");
             return true;
         }
-        if (currentNeedSkill == npcNeedSkill.blood && playerController.skillBAction.IsPressed())
+        if (currentNeedSkill == NpcNeedSkill.blood && playerController.skillBAction.IsPressed())
         {
             //playerController.onSkillB = false;
             Debug.Log("22");
             return true;
         }
-        if (currentNeedSkill == npcNeedSkill.pray && playerController.skillNAction.IsPressed())
+        if (currentNeedSkill == NpcNeedSkill.pray && playerController.skillNAction.IsPressed())
         {
             //playerController.onSkillN = false;
             Debug.Log("33");
@@ -123,7 +154,7 @@ public class NPC : MonoBehaviour
 
     public void SetQuiz()
     {
-        hasUsedSkill = false;;
+        hasUsedSkill = false;
     }
 
     public void OnTriggerEnter(Collider npcCollider)

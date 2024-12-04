@@ -44,6 +44,11 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
+        if (player == null)
+        {
+            player = GetComponent<PlayerController>();
+        }
+
         lightCount.text = "5";
         matcheCount.text = "0";
         potionCount.text = "0";
@@ -59,7 +64,10 @@ public class ItemManager : MonoBehaviour
 
     void Update()
     {
-
+        //왜계속 0으로 초기화될까?
+        //Debug.Log("beforLightCounter " + beforLightCounter);
+        //Debug.Log("beforMatcheCounter " + beforMatcheCounter);
+        //Debug.Log("beforPotionCounter " + beforPotionCounter);
     }
 
     public void GetNewItem()
@@ -86,6 +94,8 @@ public class ItemManager : MonoBehaviour
         currentImportAlarm = "등불 아이템 사용 횟수를 습득하였습니다.";
         importAlarm.text = currentImportAlarm;
 
+        player.GetItemPopup();
+
     }
     public void GetMatcheItem()
     {
@@ -98,6 +108,8 @@ public class ItemManager : MonoBehaviour
 
         currentImportAlarm = "성냥 아이템을 습득하였습니다.";
         importAlarm.text = currentImportAlarm;
+
+        player.GetItemPopup();
 
     }
 
@@ -112,6 +124,8 @@ public class ItemManager : MonoBehaviour
 
         currentImportAlarm = "체력 아이템을 습득하였습니다.";
         importAlarm.text = currentImportAlarm;
+
+        player.GetItemPopup();
 
     }
 

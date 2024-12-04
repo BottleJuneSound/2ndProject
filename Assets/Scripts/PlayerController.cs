@@ -180,21 +180,21 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            if (skillNAction.IsPressed() && pressPanel.activeSelf)
+            else if (skillNAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
                 onSkillN = true;
                 OnPray();
             }
 
-            if (skillBAction.IsPressed() && pressPanel.activeSelf)
+            else if (skillBAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
                 onSkillB = true;
                 OnBloodWithdrawal();
             }
 
-            if (closePopupAction.IsPressed() && pressPanel.activeSelf)
+            else if (closePopupAction.IsPressed() && pressPanel.activeSelf)
             {
                 ClosePopup();
                 onClose = true;
@@ -207,12 +207,11 @@ public class PlayerController : MonoBehaviour
         {
             if (onSkillM)
             {
-                //buttonM.GetComponent<Image>().color = Color.clear / Time.deltaTime;       // 점진적으로 a값 증가 시킬 수 있는 방법 찾기
                 skillActive = true;
                 currentText = "약물치료를 시행하였습니다.";
                 npcText.text = currentText;
 
-                GetItemPopup();
+                //GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillN)
@@ -270,7 +269,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void GetItemPopup()  //아이템 카운터에 1만큼 더해지는 변화가 발생하면 동작. 현재 오류 있음
+    public void GetItemPopup() 
+        //플레이어 컨트롤러에서 적용하면 프로그램이 꼬인다.
+        //아이템매니저에서 카운터가 변경된 직후 반영하여 오류해결
     {
         if (itemManager.lightCounter == itemManager.beforLightCounter + 1)
         {
@@ -299,6 +300,9 @@ public class PlayerController : MonoBehaviour
             loadN.gameObject.SetActive(false);
             loadB.gameObject.SetActive(false);
             importAlarm.SetActive(false);
+            Debug.Log("11onSkillM " + onSkillM);
+            Debug.Log("11onSkillN " + onSkillN);
+            Debug.Log("11onSkillB " + onSkillB);
 
 
 

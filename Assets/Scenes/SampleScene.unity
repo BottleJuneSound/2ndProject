@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25283d8824b3a1e44bc46547286a1731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 625974743985599995}
+  player: {fileID: 1558972122578460181}
   lightCount: {fileID: 251433164}
   matcheCount: {fileID: 2145770396}
   potionCount: {fileID: 607249148}

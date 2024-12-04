@@ -44,8 +44,9 @@ public class NPC : MonoBehaviour
 
         // NPC가 원하는 상호작용을 랜덤으로 설정(예시)
         currentNeedSkill = (NpcNeedSkill)Random.Range(0, 3);
+        giftItemSkill = (ItemSkill)Random.Range(0, 2);
         Debug.Log($"NPC 상호작용 정답: {gameObject.name} + {currentNeedSkill}");
-
+        Debug.Log($"NPC 상호작용 보상: {gameObject.name} + {giftItemSkill}");
     }
 
     void Update()
@@ -64,26 +65,28 @@ public class NPC : MonoBehaviour
         {
             //Debug.Log(CheckSkillMatch());
             bool isSkillMatch = CheckSkillMatch();  //메서드를 변수로 변환하여 중복 호출을 해결함.
-            Debug.Log(isSkillMatch);
             hasUsedSkill = true;    //이것도 있어야 중복호출 방지할 수 있음
 
-            // NPC가 원하는 스킬이 맞는지 확인
+            // NPC가 원하는 스킬이 맞는지 확인 if(CheckSkillMatch()) 
             if (isSkillMatch)
             {
                 Debug.Log($"정답 입니다. NPC: {gameObject.name}");
-                giftItemSkill = (ItemSkill)Random.Range(0, 2);
+                
 
                 if(giftItemSkill == ItemSkill.light)
                 {
                     itemManager.GetLightItem();
+                    isSkillMatch = false;   // CheckSkillMatch() 초기화
                 }
                 if (giftItemSkill == ItemSkill.matche)
                 {
                     itemManager.GetMatcheItem();
+                    isSkillMatch = false;
                 }
                 if (giftItemSkill == ItemSkill.potion)
                 {
                     itemManager.GetPotionItem();
+                    isSkillMatch = false;
                 }
                 else
                 {
@@ -132,22 +135,18 @@ public class NPC : MonoBehaviour
         if (currentNeedSkill == NpcNeedSkill.medicine && playerController.skillMAction.IsPressed())
         {
             //playerController.onSkillM = false;
-            Debug.Log("11");
             return true;
         }
         if (currentNeedSkill == NpcNeedSkill.blood && playerController.skillBAction.IsPressed())
         {
             //playerController.onSkillB = false;
-            Debug.Log("22");
             return true;
         }
         if (currentNeedSkill == NpcNeedSkill.pray && playerController.skillNAction.IsPressed())
         {
             //playerController.onSkillN = false;
-            Debug.Log("33");
             return true;
         } 
-        Debug.Log("00");
         return false;
     }
 

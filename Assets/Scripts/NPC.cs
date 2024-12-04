@@ -77,16 +77,25 @@ public class NPC : MonoBehaviour
                 {
                     itemManager.GetLightItem();
                     isSkillMatch = false;   // CheckSkillMatch() 초기화
+                    gameObject.tag = "ClearNPC";
+                    //Debug.Log(gameObject.tag);
                 }
-                if (giftItemSkill == ItemSkill.matche)
+                else if (giftItemSkill == ItemSkill.matche)
                 {
                     itemManager.GetMatcheItem();
                     isSkillMatch = false;
+                    gameObject.tag = "ClearNPC";
+                    //Debug.Log(gameObject.tag);
+
+
                 }
-                if (giftItemSkill == ItemSkill.potion)
+                else if (giftItemSkill == ItemSkill.potion)
                 {
                     itemManager.GetPotionItem();
                     isSkillMatch = false;
+                    gameObject.tag = "ClearNPC";
+                    //Debug.Log(gameObject.tag);
+
                 }
                 else
                 {
@@ -96,15 +105,12 @@ public class NPC : MonoBehaviour
 
                 //hasUsedSkill = true;
                 Invoke("SetQuiz", 3f);
-
-                //return;
             }
             else if(!isSkillMatch)
             {
                 Debug.Log($"잘못된 상호작용입니다. NPC: {gameObject.name}");
                 //hasUsedSkill = true;
                 Invoke("SetQuiz", 3f);
-                //return;
             }
 
            
@@ -153,6 +159,10 @@ public class NPC : MonoBehaviour
     public void SetQuiz()
     {
         hasUsedSkill = false;
+        playerController.pressPanel.SetActive(false);
+        playerController.popupPanel.SetActive(false);
+        playerController.importAlarm.SetActive(false);
+        playerController.OffInteractive();
     }
 
     public void OnTriggerEnter(Collider npcCollider)
@@ -171,24 +181,7 @@ public class NPC : MonoBehaviour
             playerController.activeInteract = false;
             playerController.pressPanel.SetActive(true);
             //Debug.Log("닿고있다!");
-
-            ////올바른 스킬이 작동하고 있는지 확인하는 방법 고안하기
-            //npcNeedSkill npcNeedSkills;
-            //npcNeedSkills = npcNeedSkill.medicine;
-
-            //switch (npcNeedSkills)
-            //{
-            //    case npcNeedSkill.medicine:
-            //        break;
-
-            //    case npcNeedSkill.blood:
-            //        break;
-            //    case npcNeedSkill.pray:
-            //        break;
-            //}
-
         }
-
     }
 
     public void OnTriggerExit(Collider npcCollider)
@@ -199,6 +192,7 @@ public class NPC : MonoBehaviour
 
             playerController.pressPanel.SetActive(false);
             playerController.popupPanel.SetActive(false);
+            playerController.importAlarm.SetActive(false);
             // 스킬 사용 여부 리셋
             hasUsedSkill = false; // 상호작용이 끝났을 때 스킬 사용 여부를 초기화
 
@@ -212,6 +206,5 @@ public class NPC : MonoBehaviour
             }
 
         }
-
     }
 }

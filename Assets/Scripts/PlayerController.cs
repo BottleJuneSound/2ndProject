@@ -233,17 +233,17 @@ public class PlayerController : MonoBehaviour
                 Invoke("ResetAllSkill", 3f);
             }
 
-            else
-            {
-                npcText.text = oriText;
-            }
+            //else
+            //{
+            //    npcText.text = oriText;
+            //}
         }
 
         if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.lightCounter > 0)
         {
             //Debug.Log("반환중");
             //if (lightAttackButton) return;
-            Debug.Log(itemManager.lightCounter);
+            //Debug.Log(itemManager.lightCounter);
             isAttack = true;
             lightAttackButton = true;
             //Debug.Log("작동중");
@@ -300,12 +300,6 @@ public class PlayerController : MonoBehaviour
             loadN.gameObject.SetActive(false);
             loadB.gameObject.SetActive(false);
             importAlarm.SetActive(false);
-            Debug.Log("11onSkillM " + onSkillM);
-            Debug.Log("11onSkillN " + onSkillN);
-            Debug.Log("11onSkillB " + onSkillB);
-
-
-
 
             skillActive = false;
             npcText.text = oriText;
@@ -371,7 +365,7 @@ public class PlayerController : MonoBehaviour
     public void OnBloodWithdrawal() // 상호작용 스킬 사용시, 상호작용 시작부분으로 돌아옴.
     {
         loadB.gameObject.SetActive(true);
-        Debug.Log("방혈치료 시행!");
+        //Debug.Log("방혈치료 시행!");
         OnInteractive();
         //activeInteract = false;
 
@@ -380,7 +374,7 @@ public class PlayerController : MonoBehaviour
     public void OnMedicine()
     {
         loadM.gameObject.SetActive(true);
-        Debug.Log("약물치료 시행!");
+        //Debug.Log("약물치료 시행!");
         OnInteractive();
         //activeInteract = false;
     }
@@ -388,7 +382,7 @@ public class PlayerController : MonoBehaviour
     public void OnPray()
     {
         loadN.gameObject.SetActive(true);
-        Debug.Log("기도치료 시행!");
+        //Debug.Log("기도치료 시행!");
         OnInteractive();
         //activeInteract = false;
 
@@ -405,8 +399,9 @@ public class PlayerController : MonoBehaviour
     public void OnInteractive()
     {
         if (activeInteract == true) return;
+        if (gameObject.tag == "ClearNPC") return;
 
-        Debug.Log("상호작용을 시작합니다.");
+        //Debug.Log("상호작용을 시작합니다.");
         lightAttackAction.Disable();
         activeInteract = true;
         cineCam.enabled = false;
@@ -419,7 +414,7 @@ public class PlayerController : MonoBehaviour
     {
         if (activeInteract == false) return;
 
-        Debug.Log("상호작용이 종료되었습니다.");
+        //Debug.Log("상호작용이 종료되었습니다.");
         lightAttackAction.Enable();
         if (interactiveAction.IsPressed()) activeInteract = false;
         cineCam.enabled = true;
@@ -429,21 +424,46 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void ReTryGetItemPopup() //아직 반영되어있지 않음
+    {
+        skillMAction.Disable();
+        skillNAction.Disable();
+        skillBAction.Disable();
+
+        currentText = "이 환자는 이미 진료했던 환자다. 다른 환자를 찾아보자..";
+        npcText.text = currentText;
+    }
 
     private void OnTriggerEnter(Collider playerTrigger)
     {
         if (playerTrigger.gameObject.tag == "NPC")
         {
+            npcText.text = oriText;
             npcText.gameObject.SetActive(true);
-
         }
+
+        if (playerTrigger.gameObject.tag == "ClearNPC")   //  상호작용을 마친 npc는 태그를 교체하고 해당 부분을 실행시킨다.
+        {
+            Debug.Log("변경된 태그 작동되는지 확인중");
+            npcText.gameObject.SetActive(true);
+            ReTryGetItemPopup();
+        }
+
     }
     private void OnTriggerExit(Collider playerTrigger)
     {
         if (playerTrigger.gameObject.tag == "NPC")
         {
-            npcText.gameObject.SetActive(false);    // 이 부분에서 상호작용 종료 디버그가 발생하네? 어디서 실행되는건지 확인필요
+            npcText.gameObject.SetActive(false);
+        }
 
+        if (playerTrigger.gameObject.tag == "ClearNPC") 
+        {
+            npcText.gameObject.SetActive(false);
+            
+            skillMAction.Enable();
+            skillNAction.Enable();
+            skillBAction.Enable();
         }
     }
 

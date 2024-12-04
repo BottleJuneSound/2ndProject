@@ -59,7 +59,7 @@ public class ItemManager : MonoBehaviour
         beforMatcheCounter = 0;
         beforPotionCounter = 0;
         
-        Debug.Log(lightCounter);
+        //Debug.Log(lightCounter);
     }
 
     void Update()
@@ -74,12 +74,6 @@ public class ItemManager : MonoBehaviour
     {
         //npc의 새로운 아이템 생성 확인.
         //생성된 아이템에 맞추어 아래 메서드 실행
-    }
-
-    public void ReTryGetItemPopup() //아직 반영되어있지 않음
-    {
-        player.currentText = "이 환자는 이미 진료했던 환자다. 다른 환자를 찾아보자..";
-        player.npcText.text = player.currentText;
     }
 
     public void GetLightItem()

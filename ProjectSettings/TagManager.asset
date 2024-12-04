@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Light
   - NPC
+  - ClearNPC
   layers:
   - Default
   - TransparentFX

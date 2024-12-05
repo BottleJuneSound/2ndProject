@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        boss.transform.position = new Vector3
+            (Random.Range(96, 120),
+            Random.Range(1.5f, 2),
+            Random.Range(95, 103));
+
         //GetComponent<NavMeshAgent>().speed = 30;
         GetComponent<Animator>().SetTrigger("BossIdle");
         //player = GameObject.FindWithTag("Player");
@@ -88,17 +93,18 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("spawn 작동중?");
         GetComponent<Animator>().ResetTrigger("BossHit");
-
-        //보스가 스폰되는 랜덤레인지 추가필요
-        transform.position = new Vector3 
-            (Random.Range(0,0),
-            Random.Range(0,0),
-            Random.Range(0,0));
-
         agent.enabled = true;
         boss.SetActive(true);
         isBossDown = false;
         bossAnimEnd = false;
+
+        //보스가 스폰되는 랜덤레인지 추가필요
+        boss.transform.position = new Vector3
+            (Random.Range(96, 120),
+            Random.Range(1.5f, 2),
+            Random.Range(95, 103));
+
+
         BossMove();
     }
 

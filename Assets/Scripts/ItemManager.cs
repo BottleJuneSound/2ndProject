@@ -49,15 +49,17 @@ public class ItemManager : MonoBehaviour
             player = GetComponent<PlayerController>();
         }
 
-        lightCount.text = "0";
-        matcheCount.text = "0";
-        potionCount.text = "0";
+        lightCount.text = "2";
+        matcheCount.text = "2";
+        potionCount.text = "2";
         
         beforLightCounter = 0;
         beforMatcheCounter = 0;
         beforPotionCounter = 0;
 
-        lightCounter = 0;
+        lightCounter = 2;
+        matcheCounter = 2;
+        potionCounter = 2;
         //Debug.Log(lightCounter);
     }
 
@@ -138,11 +140,38 @@ public class ItemManager : MonoBehaviour
     public void OnSpendMatche() // 버튼 입력에 할당 할 성냥사용 활성화 함수 
     {
 
+        int currentMatcheCount = int.Parse(matcheCount.text);
+
+        currentMatcheCount--;
+        currentMatcheCount = Mathf.Clamp(currentMatcheCount, 0, 50);
+        matcheCounter = Mathf.Clamp(matcheCounter, 0, 50);
+
+        matcheCounter = currentMatcheCount;
+        matcheCount.text = currentMatcheCount.ToString();
+
+        if (matcheCounter <= 0)
+        {
+            Debug.Log("성냥 사용횟수가 바닥났다!");
+            Debug.Log("currentMatcheCount " + currentMatcheCount);
+            Debug.Log("matcheCounter " + matcheCounter);
+
+            return;
+        }
     }
 
     public void OnSpendPotion()
     {
+        int currentPotionCount = int.Parse(potionCount.text); 
+        currentPotionCount--;
 
+        potionCounter = currentPotionCount;
+        potionCount.text= currentPotionCount.ToString();
+
+        if (potionCounter < 0)
+        {
+            Debug.Log("포션 사용횟수가 바닥났다!");
+            return;
+        }
     }
 
 }

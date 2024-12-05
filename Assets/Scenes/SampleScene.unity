@@ -1424,13 +1424,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763878646}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.019974481, y: 0.8985556, z: -0.041121013, w: -0.43647227}
+  m_LocalRotation: {x: -0.019974483, y: 0.8985556, z: -0.041121006, w: -0.43647227}
   m_LocalPosition: {x: 114.63, y: 5, z: 64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 12.805, y: -1.615, z: 0}
+  m_LocalEulerAnglesHint: {x: 5.24, y: -130.6, z: 0}
 --- !u!114 &763878649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,8 +1760,10 @@ MonoBehaviour:
   player: {fileID: 1558972122578460181}
   lightOil: 0
   OilAmount: {fileID: 932012111}
+  handLight: {fileID: 2243184658260209008}
   AddOilAmount: 0.3
   pressKey: 0
+  lightOff: 0
 --- !u!114 &932012111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2862,7 +2864,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   healthFaderSpeed: 0.2
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 1532785666}
+  itemManager: {fileID: 383745632}
+  player: {fileID: 1558972122578460181}
 --- !u!1 &1660563590
 GameObject:
   m_ObjectHideFlags: 0
@@ -4602,6 +4606,7 @@ MonoBehaviour:
   importAlarm: {fileID: 1711703164}
   lightAttackCollider: {fileID: 7974472294568477245}
   itemManager: {fileID: 383745632}
+  lightManager: {fileID: 932012110}
   npcText: {fileID: 2072525126}
   playerAngle: {fileID: 4640104867210170690}
   walkingSpeed: 2
@@ -4659,6 +4664,24 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 6ac28acc-9340-4035-a772-ce320f226b3f
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lightOnOffAction:
+    m_Name: Light On Off
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1f86dde9-a4a6-4510-85eb-44f93e743091
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  AddPotionSpendAction:
+    m_Name: Add Potion Spend
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4a5cebe2-d973-4038-b7f1-76205f0318e1
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

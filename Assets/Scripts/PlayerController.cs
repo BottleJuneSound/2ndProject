@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.Burst.CompilerServices;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public GameObject importAlarm;
     public CapsuleCollider lightAttackCollider;
     public ItemManager itemManager;
+    public LightManager lightManager;
 
     public TMP_Text npcText;
 
@@ -42,6 +44,8 @@ public class PlayerController : MonoBehaviour
     public InputAction interactiveAction;
     public InputAction lightAttackAction;
     public InputAction AddLightOilAction;
+    public InputAction lightOnOffAction;
+    public InputAction AddPotionSpendAction;
 
     public string oriText;
     public string currentText;
@@ -65,6 +69,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        lightAttackButton = false;
         Cursor.lockState = CursorLockMode.Locked;
         // 나중에 커서이미지로 바꿔보자. 시점 변환을 위한 마우스이기 때문에 없어도?
         Cursor.visible = true;
@@ -85,7 +90,9 @@ public class PlayerController : MonoBehaviour
         interactiveAction = inputActions.FindAction("Interact");
         closePopupAction = inputActions.FindAction("Exit");
         lightAttackAction = inputActions.FindAction("Attack");
-        AddLightOilAction = inputActions.FindAction("Previous");
+        AddLightOilAction = inputActions.FindAction("ReloadLight");
+        lightOnOffAction = inputActions.FindAction("SpendMatchLightOnOff");
+        AddPotionSpendAction = inputActions.FindAction("SpendPotion");
 
         characterController = GetComponent<CharacterController>();
         GetComponent<Animator>().SetTrigger("PlayerIdle");
@@ -241,7 +248,7 @@ public class PlayerController : MonoBehaviour
             //}
         }
 
-        if (lightAttackAction.WasPressedThisFrame() && !isAttack)
+        if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.matcheCounter >= 0)
         {
             //Debug.Log("반환중");
             //if (lightAttackButton) return;
@@ -251,7 +258,12 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("작동중");
             LightAttack();
         }
-        else if (lightAttackAction.WasReleasedThisFrame())
+        //else if(lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.matcheCounter >= 0 && lightManager.lightOff)
+        //{
+        //    isAttack = true;
+        //    lightAttackButton = true;
+        //}
+        else if (lightAttackAction.WasReleasedThisFrame() || itemManager.matcheCounter < 0)
         {
             isAttack = false;
             lightAttackButton = false;
@@ -314,19 +326,40 @@ public class PlayerController : MonoBehaviour
     {
         if (lightAttackButton)
         {
-            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.3f;
-            lightAttackCollider.GetComponent<CapsuleCollider>().height = 1f;
-            //lightAttackCollider.SetActive(true);
-            moveAction.Disable();
-            runAction.Disable();
-            skillMAction.Disable();
-            skillNAction.Disable();
-            skillBAction.Disable();
-            interactiveAction.Disable();
-            closePopupAction.Disable();
-            OnLightAttack();
 
-            //Invoke("EndLightAttack", 3f);
+            if (lightManager.lightOff)
+            {
+                lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+                lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
+                //lightAttackCollider.SetActive(true);
+                moveAction.Disable();
+                runAction.Disable();
+                skillMAction.Disable();
+                skillNAction.Disable();
+                skillBAction.Disable();
+                interactiveAction.Disable();
+                closePopupAction.Disable();
+                OnLightAttack();
+            }
+            
+            if (!lightManager.lightOff)
+            {
+                lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.3f;
+                lightAttackCollider.GetComponent<CapsuleCollider>().height = 1f;
+                //lightAttackCollider.SetActive(true);
+                moveAction.Disable();
+                runAction.Disable();
+                skillMAction.Disable();
+                skillNAction.Disable();
+                skillBAction.Disable();
+                interactiveAction.Disable();
+                closePopupAction.Disable();
+                OnLightAttack();
+
+                //Invoke("EndLightAttack", 3f);
+            }
+
+
         }
     }
 
@@ -425,7 +458,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void ReTryGetItemPopup() //아직 반영되어있지 않음
+    public void ReTryGetItemPopup() //환자 상호작용에서 정답 맞춘 후 띄우는 팝업 text변경
     {
         skillMAction.Disable();
         skillNAction.Disable();
@@ -445,7 +478,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerTrigger.gameObject.tag == "ClearNPC")   //  상호작용을 마친 npc는 태그를 교체하고 해당 부분을 실행시킨다.
         {
-            Debug.Log("변경된 태그 작동되는지 확인중");
+            //Debug.Log("변경된 태그 작동되는지 확인중");
             npcText.gameObject.SetActive(true);
             ReTryGetItemPopup();
         }

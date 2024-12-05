@@ -49,25 +49,21 @@ public class ItemManager : MonoBehaviour
             player = GetComponent<PlayerController>();
         }
 
-        lightCount.text = "5";
+        lightCount.text = "0";
         matcheCount.text = "0";
         potionCount.text = "0";
-
-        lightCounter = 5;
         
         beforLightCounter = 0;
         beforMatcheCounter = 0;
         beforPotionCounter = 0;
-        
+
+        lightCounter = 0;
         //Debug.Log(lightCounter);
     }
 
     void Update()
     {
-        //왜계속 0으로 초기화될까?
-        //Debug.Log("beforLightCounter " + beforLightCounter);
-        //Debug.Log("beforMatcheCounter " + beforMatcheCounter);
-        //Debug.Log("beforPotionCounter " + beforPotionCounter);
+
     }
 
     public void GetNewItem()
@@ -85,7 +81,7 @@ public class ItemManager : MonoBehaviour
         lightCounter = currentLightCount;
         lightCount.text = currentLightCount.ToString();
 
-        currentImportAlarm = "등불 아이템 사용 횟수를 습득하였습니다.";
+        currentImportAlarm = "등불 오일 충전 횟수를 습득하였습니다.";
         importAlarm.text = currentImportAlarm;
 
         player.GetItemPopup();

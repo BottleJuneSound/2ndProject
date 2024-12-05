@@ -88,7 +88,13 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("spawn 작동중?");
         GetComponent<Animator>().ResetTrigger("BossHit");
+
         //보스가 스폰되는 랜덤레인지 추가필요
+        transform.position = new Vector3 
+            (Random.Range(0,0),
+            Random.Range(0,0),
+            Random.Range(0,0));
+
         agent.enabled = true;
         boss.SetActive(true);
         isBossDown = false;

@@ -40,7 +40,8 @@ public class PlayerController : MonoBehaviour
     public InputAction skillBAction;
     InputAction closePopupAction;
     public InputAction interactiveAction;
-    InputAction lightAttackAction;
+    public InputAction lightAttackAction;
+    public InputAction AddLightOilAction;
 
     public string oriText;
     public string currentText;
@@ -84,6 +85,7 @@ public class PlayerController : MonoBehaviour
         interactiveAction = inputActions.FindAction("Interact");
         closePopupAction = inputActions.FindAction("Exit");
         lightAttackAction = inputActions.FindAction("Attack");
+        AddLightOilAction = inputActions.FindAction("Previous");
 
         characterController = GetComponent<CharacterController>();
         GetComponent<Animator>().SetTrigger("PlayerIdle");
@@ -239,7 +241,7 @@ public class PlayerController : MonoBehaviour
             //}
         }
 
-        if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.lightCounter > 0)
+        if (lightAttackAction.WasPressedThisFrame() && !isAttack)
         {
             //Debug.Log("¹ÝÈ¯Áß");
             //if (lightAttackButton) return;
@@ -322,7 +324,6 @@ public class PlayerController : MonoBehaviour
             skillBAction.Disable();
             interactiveAction.Disable();
             closePopupAction.Disable();
-            itemManager.OnSpendLight();
             OnLightAttack();
 
             //Invoke("EndLightAttack", 3f);

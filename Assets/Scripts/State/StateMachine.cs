@@ -9,6 +9,7 @@ public class StateMachine
     public WalkState walkState;
     public RunState runState;
     public LightFindState lightFindState;
+    public LightAttackEnd lightAttackEnd;
 
     public StateMachine(PlayerController player)
     {
@@ -18,6 +19,7 @@ public class StateMachine
         walkState = new WalkState(player);
         runState = new RunState(player);
         lightFindState = new LightFindState(player);
+        lightAttackEnd = new LightAttackEnd(player);
     }
 
     public void Initialize(IState state)

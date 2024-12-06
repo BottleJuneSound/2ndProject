@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public GameObject buttonN;
     public GameObject buttonB;
     public GameObject importAlarm;
+    public Enemy boss;
     public CapsuleCollider lightAttackCollider;
     public ItemManager itemManager;
     public LightManager lightManager;
@@ -267,6 +268,7 @@ public class PlayerController : MonoBehaviour
         {
             isAttack = false;
             lightAttackButton = false;
+            boss.playerLight.intensity = 50;
             EndLightAttack();
         }
 
@@ -326,7 +328,6 @@ public class PlayerController : MonoBehaviour
     {
         if (lightAttackButton)
         {
-
             if (lightManager.lightOff)
             {
                 lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
@@ -345,7 +346,7 @@ public class PlayerController : MonoBehaviour
             if (!lightManager.lightOff)
             {
                 lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.3f;
-                lightAttackCollider.GetComponent<CapsuleCollider>().height = 1f;
+                lightAttackCollider.GetComponent<CapsuleCollider>().height = 2.5f;
                 //lightAttackCollider.SetActive(true);
                 moveAction.Disable();
                 runAction.Disable();
@@ -378,6 +379,10 @@ public class PlayerController : MonoBehaviour
         OnIdle();
     }
 
+    public void OnLightAttackEnd()
+    {
+        stateMachine.TransitionTo(stateMachine.lightAttackEnd);
+    }
     public void OnLightAttack()
     {
         stateMachine.TransitionTo(stateMachine.lightFindState);

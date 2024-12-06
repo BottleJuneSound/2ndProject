@@ -9,7 +9,7 @@ public class NPC : MonoBehaviour
     public bool nowInteracting = false;
     public bool hasUsedSkill = false;
     public ItemManager itemManager;
-
+    public BossHPManager bossHPManager;
 
     public enum NpcNeedSkill
     {
@@ -108,6 +108,7 @@ public class NPC : MonoBehaviour
             }
             else if(!isSkillMatch)
             {
+                bossHPManager.BossHPAdd(); // 보스 타격횟수 증가에 필요한 함수
                 Debug.Log($"잘못된 상호작용입니다. NPC: {gameObject.name}");
                 //hasUsedSkill = true;
                 Invoke("SetQuiz", 3f);

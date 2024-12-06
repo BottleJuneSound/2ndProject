@@ -78,12 +78,12 @@ public class LightManager : MonoBehaviour
 
 
         OilAmount.fillAmount = lightOil;
-        Debug.Log(player.lightAttackButton);
+        //Debug.Log(player.lightAttackButton);
     }
 
     public void LightOilGauge()
     {
-        lightOil -= Time.deltaTime / 3;
+        lightOil -= Time.deltaTime / 10;
         lightOil = Mathf.Clamp(lightOil, 0, 1);
 
         if(lightOil <= 0)

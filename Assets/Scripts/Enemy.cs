@@ -13,11 +13,13 @@ public class Enemy : MonoBehaviour
     public GameObject boss;
     public NavMeshAgent agent;
     public BossHPManager bossHpManager;
+    public HPManager hpManager;
     public Light playerLight;
     public Light horrorLight;
     public CinemachineCamera bossFightCam;
 
     public CapsuleCollider bossCollider;
+    public CapsuleCollider bossDamageCollider;
 
     private Vector3 lastPlayerPosition; // 이전 플레이어 위치 저장
     public bool isBossDown = false;   // BossDown 실행 상태를 나타내는 플래그
@@ -29,7 +31,9 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        bossDamageCollider.enabled = false;
         bossCollider.enabled = false;
+
         boss.transform.position = new Vector3
             (Random.Range(96, 120),
             Random.Range(1.5f, 2),
@@ -74,6 +78,9 @@ public class Enemy : MonoBehaviour
     public void DestroyBoss()
     {
         Destroy(gameObject);
+
+        //StageClearPopUP();
+
     }
 
 
@@ -82,7 +89,11 @@ public class Enemy : MonoBehaviour
         //보스 오브젝트 비활성화시 에러를 방지하기 위한 조건
         if (agent.enabled == true)
         {
+            bossDamageCollider.enabled = false;
             bossCollider.enabled = false;
+
+            hpManager.hpAlarm.enabled = false;
+
 
             bossFightCam.Lens.FieldOfView = 30;
             horrorLight.intensity = 0;
@@ -155,6 +166,7 @@ public class Enemy : MonoBehaviour
 
             horrorLight.intensity += 30 * Time.deltaTime;
             horrorLight.intensity = Mathf.Clamp(horrorLight.intensity, 0, 5);
+            bossDamageCollider.enabled = true;
             bossCollider.enabled = true;
             GetComponent<Animator>().ResetTrigger("BossHit");
 
@@ -162,9 +174,9 @@ public class Enemy : MonoBehaviour
 
             agent.isStopped = false;
             triggerTime = 1f;
-            agent.speed = 7;
-            agent.acceleration = 3f;
-            agent.stoppingDistance = 5;
+            agent.speed = 20;
+            agent.acceleration = 8f;
+            agent.stoppingDistance = 3;
             lastPlayerPosition = player.transform.position; // 최신 위치 저장
             agent.destination = lastPlayerPosition; // 목적지 갱신
             GetComponent<Animator>().SetTrigger("BossIdle");

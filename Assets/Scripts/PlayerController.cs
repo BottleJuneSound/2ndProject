@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public CapsuleCollider lightAttackCollider;
     public ItemManager itemManager;
     public LightManager lightManager;
+    public HPManager hpManager;
 
     public TMP_Text npcText;
 
@@ -489,6 +490,16 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerStay(Collider playerTrigger)
+    {
+        if(playerTrigger.gameObject.tag == "Boss")
+        {
+            hpManager.LossHealth();
+        }
+
+    }
+
     private void OnTriggerExit(Collider playerTrigger)
     {
         if (playerTrigger.gameObject.tag == "NPC")
@@ -504,7 +515,14 @@ public class PlayerController : MonoBehaviour
             skillNAction.Enable();
             skillBAction.Enable();
         }
+        if (playerTrigger.gameObject.tag == "Boss")
+        {
+            hpManager.hpAlarm.enabled = false;
+
+        }
     }
+
+
 
 
 }

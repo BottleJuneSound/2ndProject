@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!136 &79648168 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 9076470396325068716, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
+  m_PrefabInstance: {fileID: 1953779269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &201170225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1892,7 +1897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &868709522
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2306,6 +2311,104 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 941884574}
   m_CullTransparentMesh: 1
+--- !u!1 &953898368
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 953898369}
+  - component: {fileID: 953898371}
+  - component: {fileID: 953898370}
+  - component: {fileID: 953898372}
+  m_Layer: 5
+  m_Name: HPAlarm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &953898369
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953898368}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1921638611}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -689.0707, y: -426.511}
+  m_SizeDelta: {x: 1361.0479, y: 1027.2561}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &953898370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953898368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.509434, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &953898371
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953898368}
+  m_CullTransparentMesh: 1
+--- !u!95 &953898372
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953898368}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08e8099bfe3ee9541a318aee89f9919d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &977751599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3372,6 +3475,7 @@ MonoBehaviour:
   playerHealth: {fileID: 1532785666}
   itemManager: {fileID: 383745632}
   player: {fileID: 1558972122578460181}
+  hpAlarm: {fileID: 953898370}
 --- !u!1 &1541725415
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,6 +4010,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1532785665}
+  - {fileID: 953898369}
   m_Father: {fileID: 2455621450350432147}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4098,7 +4203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1946630194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4212,7 +4317,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Speed
-      value: 7
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Enabled
@@ -4220,11 +4325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_Acceleration
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1290883991710986036, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_StoppingDistance
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4917203731776861744, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_LocalScale.x
@@ -4282,6 +4387,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 4917203731776861747, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4917203732230261462, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4301,6 +4410,10 @@ PrefabInstance:
     - target: {fileID: 8814645819259795829, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8814645819259795829, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
+      propertyPath: m_TagString
+      value: Boss
       objectReference: {fileID: 0}
     - target: {fileID: 9076470396325068716, guid: 7fcfd2b2a44cc3e4d96f3a35ef7a2a56, type: 3}
       propertyPath: m_IsTrigger
@@ -4335,10 +4448,12 @@ MonoBehaviour:
   boss: {fileID: 1953779270}
   agent: {fileID: 1953779274}
   bossHpManager: {fileID: 1541725416}
+  hpManager: {fileID: 1532785668}
   playerLight: {fileID: 2243184658260209008}
   horrorLight: {fileID: 1026258558}
   bossFightCam: {fileID: 763878647}
   bossCollider: {fileID: 1953779275}
+  bossDamageCollider: {fileID: 79648168}
   isBossDown: 0
   isRangeOut: 0
   triggerTime: 1
@@ -5450,6 +5565,7 @@ MonoBehaviour:
   lightAttackCollider: {fileID: 7974472294568477245}
   itemManager: {fileID: 383745632}
   lightManager: {fileID: 932012110}
+  hpManager: {fileID: 1532785668}
   npcText: {fileID: 2072525126}
   playerAngle: {fileID: 4640104867210170690}
   walkingSpeed: 2

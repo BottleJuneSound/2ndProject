@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -59,6 +60,22 @@ public class Enemy : MonoBehaviour
 
         }
     }
+
+    public void BossDie()
+    {
+        //GetComponent<Animator>().ResetTrigger("BossIdle");
+        //GetComponent<Animator>().ResetTrigger("BossHit");
+        //GetComponent<Animator>().SetTrigger("BossDie");
+
+        Invoke("DestroyBoss", 2f);
+
+    }
+
+    public void DestroyBoss()
+    {
+        Destroy(gameObject);
+    }
+
 
     public void BossDown()
     {

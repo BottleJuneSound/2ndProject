@@ -2397,7 +2397,7 @@ Animator:
   m_GameObject: {fileID: 953898368}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 08e8099bfe3ee9541a318aee89f9919d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 333b0ff491502814da31802bd7b71d9b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3476,6 +3476,7 @@ MonoBehaviour:
   itemManager: {fileID: 383745632}
   player: {fileID: 1558972122578460181}
   hpAlarm: {fileID: 953898370}
+  playerDeath: 0
 --- !u!1 &1541725415
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,9 +4182,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossZone: {fileID: 1942258787}
   bossFightCam: {fileID: 763878646}
+  sideCam: {fileID: 763878647}
   playerCam: {fileID: 1320199404}
+  thirdCam: {fileID: 1320199409}
+  player: {fileID: 625974743985599995}
   boss: {fileID: 1953779270}
   globalVol: {fileID: 832575517}
+  hpManager: {fileID: 1532785668}
+  bossHPManager: {fileID: 1541725416}
+  riseComposer: {fileID: 1320199407}
+  cineInput: {fileID: 1320199405}
 --- !u!1 &1946630193
 GameObject:
   m_ObjectHideFlags: 0

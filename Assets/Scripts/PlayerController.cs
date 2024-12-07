@@ -119,6 +119,21 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (hpManager.playerDeath)
+        {
+            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+            lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
+            //lightAttackCollider.SetActive(true);
+            moveAction.Disable();
+            runAction.Disable();
+            skillMAction.Disable();
+            skillNAction.Disable();
+            skillBAction.Disable();
+            interactiveAction.Disable();
+            closePopupAction.Disable();
+
+            return;
+        }
 
         //3D에서 y는 Z에 반영하는 것이 자연스러움. xyz 위치 바꿔주는 내용
         Vector2 moveVector = moveAction.ReadValue<Vector2>();
@@ -380,6 +395,10 @@ public class PlayerController : MonoBehaviour
         OnIdle();
     }
 
+    public void OnPlayerDeath()
+    {
+        stateMachine.TransitionTo(stateMachine.playerDeathState);
+    }
     public void OnLightAttackEnd()
     {
         stateMachine.TransitionTo(stateMachine.lightAttackEnd);

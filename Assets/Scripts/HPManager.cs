@@ -9,10 +9,13 @@ public class HPManager : MonoBehaviour
     public ItemManager itemManager;
     public PlayerController player;
     public Image hpAlarm;
+    public StateMachine stateMachine;
+    public bool playerDeath;
     
 
     void Start()
     {
+        playerDeath = false;
         hpAlarm.enabled = false;
         health = 0.5f;  //임시값. 나중에 1로 변경해야함
         playerHealth.fillAmount = health;
@@ -64,22 +67,38 @@ public class HPManager : MonoBehaviour
             health = Mathf.Clamp(health, 0, 1);
             hpAlarm.enabled = true;
         }
-        else if(health <= 0)
+        else if (health <= 0)
         {
-            Debug.Log("플레이어 체력 0으로 게임 종료 리트하셈!");
-        }
-    }
+            if (!hpAlarm.enabled) return;
+            
+            playerDeath = true;
+
+            player.GetComponent<Animator>().ResetTrigger("PlayerIdle");
+            player.GetComponent<Animator>().ResetTrigger("PlayerRun");
+            player.GetComponent<Animator>().ResetTrigger("PlayerWalk");
+            //player.GetComponent<Animator>().SetBool("LightAttackBool", false);
 
 
-    public void PlayerDie()
-    {
-        if(health <= 0)
-        {
+            player.OnPlayerDeath();
             hpAlarm.enabled = false;
+            
+            Debug.Log("플레이어 체력 0으로 게임 종료 리트하셈!");
             //Invoke("GameOverPopUp", 1f);
         }
-
     }
+
+
+    //public void PlayerDie()
+    //{
+    //    if(health <= 0)
+    //    {
+    //        player.OnPlayerDeath();
+    //        hpAlarm.enabled = false;
+    //        Debug.Log("플레이어 체력 0으로 게임 종료 리트하셈!");
+    //        //Invoke("GameOverPopUp", 1f);
+    //    }
+
+    //}
     //브레이크 포인트가 필요하다.
     //스위치 브레이크?
     //한대 맞으면 몇 float의 체력이 감소할지

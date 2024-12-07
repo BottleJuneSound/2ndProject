@@ -72,9 +72,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         lightAttackButton = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = true;
         // 나중에 커서이미지로 바꿔보자. 시점 변환을 위한 마우스이기 때문에 없어도?
-        Cursor.visible = true;
+
+        Cursor.lockState = CursorLockMode.Confined;
         //lightAttackCollider.SetActive(false);
 
         lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;

@@ -9,6 +9,7 @@ TagManager:
   - ClearNPC
   - EnterBossZone
   - Boss
+  - BossZoneInfo
   layers:
   - Default
   - TransparentFX

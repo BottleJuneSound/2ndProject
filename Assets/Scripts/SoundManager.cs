@@ -9,7 +9,19 @@ public class SoundManager : MonoBehaviour
     private float minVolume = -20f;
     private float maxVolume = 0;
     public Slider ambiSlider;
+    public Slider sfxSlider;
+    public Slider bgmSlider;
     public bool uiPop;
+
+    public AudioResource playerFootsteps;
+    //public AudioResource playerEquip;
+    public AudioResource getItem;
+    public AudioResource lightAtt;
+    public AudioResource bossHit;
+
+    public AudioSource[] audioSource;
+
+
     
     static SoundManager instance;
 
@@ -32,10 +44,18 @@ public class SoundManager : MonoBehaviour
         uiPop = false;
         soundSystemPopup.SetActive(false);
         float currentVolume;
-        if (audioMixer.GetFloat("Ambi", out currentVolume)) //시작시 페이더와 믹서의 초기값 설정
+        if (audioMixer.GetFloat("Ambi", out currentVolume) 
+            || audioMixer.GetFloat("SFX", out currentVolume) 
+            || audioMixer.GetFloat("BGM", out currentVolume)) //시작시 페이더와 믹서의 초기값 설정
         {
             ambiSlider.value = MapVolumeToSliderValue(currentVolume);
             ambiSlider.value = 0.75f;
+
+            sfxSlider.value = MapVolumeToSliderValue(currentVolume);
+            sfxSlider.value = 0.75f;
+
+            bgmSlider.value = MapVolumeToSliderValue(currentVolume);
+            bgmSlider.value = 0.75f;
         }
     }
 
@@ -48,6 +68,33 @@ public class SoundManager : MonoBehaviour
     {
         return Mathf.Lerp(minVolume, maxVolume, sliderValue);
     }
+
+
+    public void PlayerFootstepsSFX()
+    {
+        audioSource[0].resource = playerFootsteps;
+        audioSource[0].Play();
+    }
+
+    public void GetItemSFX()
+    {
+        audioSource[1].resource = getItem;
+        audioSource[1].Play();
+    }
+
+    public void LightAttackSFX()
+    {
+        audioSource[2].resource = lightAtt;
+        audioSource[2].Play();
+    }
+
+    public void BossHitSFX()
+    {
+        audioSource[3].resource = bossHit;
+        audioSource[3].Play();
+    }
+
+
 
     public void OnSoundSettingPopup()   //사운드 세팅 팝업 버튼 클릭
     {
@@ -74,13 +121,15 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    public void SFXFader()
+    public void SFXFader(float sliderValue)
     {
-
+        float volume = Mathf.Lerp (minVolume, maxVolume, sliderValue);
+        audioMixer.SetFloat("SFX", volume);
     }
 
-    public void BGMFader()
+    public void BGMFader(float sliderValue)
     {
-
+        float volume = Mathf.Lerp(minVolume, maxVolume, sliderValue);
+        audioMixer.SetFloat("BGM", volume);
     }
 }

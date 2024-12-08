@@ -24,8 +24,10 @@ public class PlayerController : MonoBehaviour
     public ItemManager itemManager;
     public LightManager lightManager;
     public HPManager hpManager;
+    public BossHPManager bossHP;
 
     public TMP_Text npcText;
+    public TMP_Text interText;
 
     public Transform playerAngle;
     public StateMachine stateMachine;
@@ -51,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
     public string oriText;
     public string currentText;
+    public string interOriText;
+    public string interCurrentText;
 
     public bool activeInteract = false;
     public bool onSkillM = false;
@@ -103,6 +107,7 @@ public class PlayerController : MonoBehaviour
 
         stateMachine.Initialize(stateMachine.idleState);
         oriText = npcText.text;
+        interOriText = interText.text;
         importAlarm.SetActive(false);
 
         //if (itemManager == null)
@@ -499,6 +504,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerTrigger.gameObject.tag == "NPC")
         {
+            interText.text = interOriText;
             npcText.text = oriText;
             npcText.gameObject.SetActive(true);
         }
@@ -508,6 +514,20 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("변경된 태그 작동되는지 확인중");
             npcText.gameObject.SetActive(true);
             ReTryGetItemPopup();
+        }
+
+        if (playerTrigger.gameObject.tag == "BossZoneInfo" && bossHP.currentActiveIndex <= 4)
+        {
+            currentText = "당신은 아직 보스를 상대하기에 충분히 준비되지 않았습니다. \n마을의 병든 시민을 치료하여 보스의 공격에 대비하세요.";
+            npcText.text = currentText;
+            npcText.gameObject.SetActive(true);
+        }
+
+        if (playerTrigger.gameObject.tag == "BossZoneInfo" && bossHP.currentActiveIndex > 4)
+        {
+            currentText = "보스가 환자를 치료한 당신을 지켜보고 있습니다. \n보스를 처치하여 마을을 구하세요";
+            npcText.text = currentText;
+            npcText.gameObject.SetActive(true);
         }
 
     }
@@ -539,7 +559,11 @@ public class PlayerController : MonoBehaviour
         if (playerTrigger.gameObject.tag == "Boss")
         {
             hpManager.hpAlarm.enabled = false;
+        }
 
+        if (playerTrigger.gameObject.tag == "BossZoneInfo")
+        {
+            npcText.gameObject.SetActive(false);
         }
     }
 

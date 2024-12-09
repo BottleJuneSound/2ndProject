@@ -18,6 +18,10 @@ public class SoundManager : MonoBehaviour
     public AudioResource getItem;
     public AudioResource lightAtt;
     public AudioResource bossHit;
+    public AudioResource buttonClick;
+    public AudioResource npcWalla;
+    public AudioResource fildAmbi;
+    public AudioResource bossZoneAmbi;
 
     public AudioSource[] audioSource;
 
@@ -70,6 +74,18 @@ public class SoundManager : MonoBehaviour
     }
 
 
+    public void FildAmbi()
+    {
+        audioSource[6].resource = fildAmbi;
+        audioSource[6].Play();
+    }
+
+    public void BossZoneAmbi()
+    {
+        audioSource[6].resource = bossZoneAmbi;
+        audioSource[6].Play();
+    }
+
     public void PlayerFootstepsSFX()
     {
         audioSource[0].resource = playerFootsteps;
@@ -94,7 +110,17 @@ public class SoundManager : MonoBehaviour
         audioSource[3].Play();
     }
 
+    public void ClickButtonSFX()
+    {
+        audioSource[4].resource = buttonClick;
+        audioSource[4].Play();
+    }
 
+    public void NPCWallaSFX()
+    {
+        audioSource[5].resource = npcWalla;
+        audioSource[5].Play();
+    }
 
     public void OnSoundSettingPopup()   //사운드 세팅 팝업 버튼 클릭
     {

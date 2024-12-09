@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public LightManager lightManager;
     public HPManager hpManager;
     public BossHPManager bossHP;
+    public SoundManager soundManager;
 
     public TMP_Text npcText;
     public TMP_Text interText;
@@ -567,7 +568,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    public void WalkSFX()
+    {
+        soundManager.PlayerFootstepsSFX();
+    }
 
 
 }

@@ -1366,7 +1366,17 @@ MonoBehaviour:
   getItem: {fileID: 6418180475301049370, guid: adc0177aad2a4ee46ba15f8e8bcc65a1, type: 2}
   lightAtt: {fileID: 6418180475301049370, guid: a70d52536bcb78447a86894999f6d58b, type: 2}
   bossHit: {fileID: 6418180475301049370, guid: cfbf3d367acc2bc4786e0aa400059e0b, type: 2}
-  audioSource: []
+  buttonClick: {fileID: 6418180475301049370, guid: 3f2c4c1ca72a4a547be986b1fafe3d64, type: 2}
+  npcWalla: {fileID: 0}
+  fildAmbi: {fileID: 0}
+  bossZoneAmbi: {fileID: 0}
+  audioSource:
+  - {fileID: 272364597}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!82 &272364595
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19444,6 +19454,7 @@ MonoBehaviour:
   lightManager: {fileID: 932012110}
   hpManager: {fileID: 1532785668}
   bossHP: {fileID: 1541725416}
+  soundManager: {fileID: 272364594}
   npcText: {fileID: 2072525126}
   interText: {fileID: 5978795046032865715}
   playerAngle: {fileID: 4640104867210170690}
@@ -19453,7 +19464,7 @@ MonoBehaviour:
   verticalSpeed: 0
   cineCam: {fileID: 1320199405}
   moveAction:
-    m_Name: 
+    m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: c5d608f2-8f82-482b-abb3-a2af5abd5821
@@ -23724,10 +23735,10 @@ SceneRoots:
   - {fileID: 868709525}
   - {fileID: 1946630198}
   - {fileID: 6040630}
-  - {fileID: 272364593}
   - {fileID: 1450467012}
   - {fileID: 902290827}
   - {fileID: 1585980746}
   - {fileID: 368170145}
   - {fileID: 1182756571}
   - {fileID: 1704333623}
+  - {fileID: 272364593}

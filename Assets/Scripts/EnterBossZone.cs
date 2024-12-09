@@ -5,9 +5,11 @@ public class EnterBossZone : MonoBehaviour
 {
     public BoxCollider enterBossZone;
     public BossHPManager bossHP;
+    public GameObject bossZoneAlarm;
 
     void Start()
     {
+        bossZoneAlarm.SetActive(false);
         enterBossZone.isTrigger = false;
     }
 
@@ -32,20 +34,33 @@ public class EnterBossZone : MonoBehaviour
 
         if (bossBox.gameObject.tag == "Player" && bossHP.currentActiveIndex > 4)
         {
-            Debug.Log("보스전 입장을 환영합니다");
+            bossZoneAlarm.SetActive(true);
+
+            Invoke("OnBossZoneEnterPopUp", 2f);
+            //Debug.Log("보스전 입장을 환영합니다");
             //enterBossZone.isTrigger = true;
             //Invoke("OnDestroy", 2f);
 
         }
     }
 
+    public void OnBossZoneEnterPopUp()
+    {
+        bossZoneAlarm.SetActive(false);
+    }
+
     //public void OnTriggerExit(Collider bossBox)   // 한번들어오면 다시 못나가게 할지 고민해보기
     //{
     //    if (bossBox.gameObject.tag == "Player" && bossHP.currentActiveIndex > 4)
     //    {
-    //        Debug.Log("문이 닫혔습니다.");
-    //        enterBossZone.isTrigger = false;
+    //        bossZoneAlarm.SetActive(true);
     //    }
+
+    //    //if (bossBox.gameObject.tag == "Player" && bossHP.currentActiveIndex > 4)
+    //    //{
+    //    //    Debug.Log("문이 닫혔습니다.");
+    //    //    enterBossZone.isTrigger = false;
+    //    //}
     //}
 
 

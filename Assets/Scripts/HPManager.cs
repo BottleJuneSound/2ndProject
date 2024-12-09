@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+//using UnityEngine.UIElements;
 
 public class HPManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class HPManager : MonoBehaviour
     public GameObject gameOverAlarm;
     public TMP_Text gameOverTMP;
     public string gameOverText;
+    CharacterController characterController;
 
     void Start()
     {
@@ -90,7 +92,12 @@ public class HPManager : MonoBehaviour
             hpAlarm.enabled = false;
             gameOverAlarm.SetActive(true);
             gameOverTMP.text = gameOverText;
-            
+
+            player.lightAttackAction.Disable();
+            player.activeInteract = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             Debug.Log("플레이어 체력 0으로 게임 종료 리트하셈!");
             //Invoke("GameOverPopUp", 1f);
         }

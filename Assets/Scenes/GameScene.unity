@@ -1369,14 +1369,18 @@ MonoBehaviour:
   bgmSlider: {fileID: 543353783}
   uiPop: 0
   hasPlaySound: 0
+  changeAmbiFild: 0
+  changeAmbiBossZone: 0
   playerFootsteps: {fileID: 6418180475301049370, guid: 0a9ecd713263e16448ed53c01d5ecac6, type: 2}
   playerSlowSteps: {fileID: 6418180475301049370, guid: a02a517424a5a4f4fbb7fe1fa845f3e4, type: 2}
   getItem: {fileID: 6418180475301049370, guid: adc0177aad2a4ee46ba15f8e8bcc65a1, type: 2}
-  spendMatch: {fileID: 0}
-  spendOil: {fileID: 0}
-  spendPotion: {fileID: 0}
+  spendMatch: {fileID: 6418180475301049370, guid: 787b94018ff876846a8a313226c6a013, type: 2}
+  spendOil: {fileID: 6418180475301049370, guid: cd2576d79f84939458a19ffc6111f746, type: 2}
+  spendPotion: {fileID: 6418180475301049370, guid: e17b4db36f2960646a2dfd6877ca65cc, type: 2}
+  lightAttRattle: {fileID: 6418180475301049370, guid: a426dde519ac85b4bb0bd8b4fb8902bf, type: 2}
   lightAtt: {fileID: 6418180475301049370, guid: a70d52536bcb78447a86894999f6d58b, type: 2}
   bossHit: {fileID: 6418180475301049370, guid: cfbf3d367acc2bc4786e0aa400059e0b, type: 2}
+  bossDie: {fileID: 6418180475301049370, guid: b609829dbd3dc034b8bc847de79e81eb, type: 2}
   buttonClick: {fileID: 6418180475301049370, guid: 3f2c4c1ca72a4a547be986b1fafe3d64, type: 2}
   npcWalla: {fileID: 0}
   fildAmbi: {fileID: 8300000, guid: 9d3c3fef6d773a144a888f039b362843, type: 3}
@@ -1984,7 +1988,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2699,6 +2703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1558972122578460181}
+  soundManager: {fileID: 272364594}
   lightCount: {fileID: 251433164}
   matcheCount: {fileID: 2145770396}
   potionCount: {fileID: 607249148}
@@ -2718,7 +2723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 383745631}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 746.60657, y: 129.91135, z: -11.268516}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8317,6 +8322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemManager: {fileID: 383745632}
+  soundManager: {fileID: 272364594}
   player: {fileID: 1558972122578460181}
   lightOil: 0
   OilAmount: {fileID: 932012111}
@@ -11174,8 +11180,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Height: 2.5
+  m_Radius: 3
+  m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 0.6531756, z: 0}
 --- !u!1001 &1184678433
@@ -24135,8 +24141,6 @@ SceneRoots:
   - {fileID: 1953779269}
   - {fileID: 1942258791}
   - {fileID: 1089995715}
-  - {fileID: 383745633}
-  - {fileID: 1541725417}
   - {fileID: 868709525}
   - {fileID: 1946630198}
   - {fileID: 6040630}
@@ -24145,5 +24149,7 @@ SceneRoots:
   - {fileID: 1585980746}
   - {fileID: 368170145}
   - {fileID: 1182756571}
+  - {fileID: 383745633}
+  - {fileID: 1541725417}
   - {fileID: 1704333623}
   - {fileID: 272364593}

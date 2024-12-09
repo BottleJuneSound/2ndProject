@@ -8,7 +8,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_playerFootWalk01_{-5669307298236311434}
   m_AudioClip: {fileID: 8300000, guid: 03dfde4f4ff532b43a8961b9d193b635, type: 3}
-  m_Volume: -15
+  m_Volume: -10
   m_Enabled: 1
 --- !u!1233149941 &-302515898991576645
 AudioContainerElement:
@@ -18,7 +18,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_playerFootWalk03_{-302515898991576645}
   m_AudioClip: {fileID: 8300000, guid: dcef91bdc37cb3245a4920920a7364ae, type: 3}
-  m_Volume: -15
+  m_Volume: -10
   m_Enabled: 1
 --- !u!1233149941 &336098183892433819
 AudioContainerElement:
@@ -28,7 +28,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_playerFootWalk02_{336098183892433819}
   m_AudioClip: {fileID: 8300000, guid: abbead2bca891ca43ab7798eca74eda6, type: 3}
-  m_Volume: -15
+  m_Volume: -10
   m_Enabled: 1
 --- !u!1307931743 &6418180475301049370
 AudioRandomContainer:

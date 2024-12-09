@@ -1,10 +1,10 @@
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LightManager : MonoBehaviour
 {
     public ItemManager itemManager;
+    public SoundManager soundManager;
     public PlayerController player;
     public float lightOil;
     public Image OilAmount;
@@ -136,6 +136,7 @@ public class LightManager : MonoBehaviour
 
     public void OnLight()
     {
+        soundManager.SpendMatcheSFX();
         itemManager.OnSpendMatche();
         lightOff = false;
         handLight.enabled = true;

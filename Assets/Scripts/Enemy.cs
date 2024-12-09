@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
         //GetComponent<Animator>().ResetTrigger("BossIdle");
         //GetComponent<Animator>().ResetTrigger("BossHit");
         //GetComponent<Animator>().SetTrigger("BossDie");
-
+        soundManager.BossDieSFX();
         Invoke("DestroyBoss", 2f);
 
     }

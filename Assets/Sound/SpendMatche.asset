@@ -1,14 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1233149941 &1275125847698090180
+--- !u!1233149941 &-2445313108159220109
 AudioContainerElement:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sfx_LightAtt_{1275125847698090180}
-  m_AudioClip: {fileID: 8300000, guid: 5c1ad511dad53cb478ebc0584efbf3ba, type: 3}
-  m_Volume: 0
+  m_Name: sfx_SpendMathch01_{-2445313108159220109}
+  m_AudioClip: {fileID: 8300000, guid: 7dc1d6fac620f174f81b347fbf7db04b, type: 3}
+  m_Volume: -3
+  m_Enabled: 1
+--- !u!1233149941 &5660048456428201426
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: sfx_SpendMathch02_{5660048456428201426}
+  m_AudioClip: {fileID: 8300000, guid: c99ccdb6357d0014da1a6072847cfe76, type: 3}
+  m_Volume: -3
   m_Enabled: 1
 --- !u!1307931743 &6418180475301049370
 AudioRandomContainer:
@@ -16,19 +26,20 @@ AudioRandomContainer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LightAttack
-  m_Volume: -3
+  m_Name: SpendMatche
+  m_Volume: 0
   m_Pitch: 0
   m_AutomaticTriggerTime: 0
   m_LoopCount: 1
   m_VolumeRandomizationRange: {x: 0, y: 0}
-  m_PitchRandomizationRange: {x: -50, y: 50}
+  m_PitchRandomizationRange: {x: 0, y: 0}
   m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
   m_LoopCountRandomizationRange: {x: 0, y: 0}
   m_Elements:
-  - {fileID: 1275125847698090180}
+  - {fileID: 5660048456428201426}
+  - {fileID: -2445313108159220109}
   m_AvoidRepeatingLast: 0
-  m_PlaybackMode: 0
+  m_PlaybackMode: 1
   m_TriggerMode: 0
   m_AutomaticTriggerMode: 1
   m_LoopMode: 2

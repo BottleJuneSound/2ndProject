@@ -285,6 +285,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("반환중");
             //if (lightAttackButton) return;
             //Debug.Log(itemManager.lightCounter);
+            soundManager.LightAttRattleSFX();
             isAttack = true;
             lightAttackButton = true;
             //Debug.Log("작동중");
@@ -495,7 +496,7 @@ public class PlayerController : MonoBehaviour
         lightAttackAction.Enable();
         if (interactiveAction.IsPressed()) activeInteract = false;
         cineCam.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         onClose = false;
 

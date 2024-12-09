@@ -8,7 +8,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_footsteps01_{-7582452776033672943}
   m_AudioClip: {fileID: 8300000, guid: d5b701600d779e849923e42aecad1617, type: 3}
-  m_Volume: -20
+  m_Volume: -8
   m_Enabled: 1
 --- !u!1233149941 &-7471203090586390609
 AudioContainerElement:
@@ -18,7 +18,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_footsteps03_{-7471203090586390609}
   m_AudioClip: {fileID: 8300000, guid: 0796abe977a148f4586484af0650efb9, type: 3}
-  m_Volume: -20
+  m_Volume: -8
   m_Enabled: 1
 --- !u!1233149941 &-6797771039766754584
 AudioContainerElement:
@@ -28,7 +28,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_footstepsRun03_{-6797771039766754584}
   m_AudioClip: {fileID: 8300000, guid: 3ea189e1f2b66834e9695f577544f721, type: 3}
-  m_Volume: -20
+  m_Volume: -8
   m_Enabled: 1
 --- !u!1233149941 &-6448631084147408845
 AudioContainerElement:
@@ -38,7 +38,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_footstepsRun01_{-6448631084147408845}
   m_AudioClip: {fileID: 8300000, guid: e3ea2d5c97c7af64087769f3d3692b4b, type: 3}
-  m_Volume: -20
+  m_Volume: -8
   m_Enabled: 1
 --- !u!1233149941 &-4377761994460117775
 AudioContainerElement:
@@ -48,7 +48,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_footsteps02_{-4377761994460117775}
   m_AudioClip: {fileID: 8300000, guid: 7c2429c4b2fd4024c8a5165b762f23ac, type: 3}
-  m_Volume: -20
+  m_Volume: -8
   m_Enabled: 1
 --- !u!1233149941 &-3778232133216029181
 AudioContainerElement:
@@ -58,7 +58,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_footstepsRun02_{-3778232133216029181}
   m_AudioClip: {fileID: 8300000, guid: 1fa679a0055199d49934c88fb84b3bc2, type: 3}
-  m_Volume: -20
+  m_Volume: -8
   m_Enabled: 1
 --- !u!1233149941 &3687324594953458990
 AudioContainerElement:
@@ -68,7 +68,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_footsteps04_{3687324594953458990}
   m_AudioClip: {fileID: 8300000, guid: c2674a8bb79763b429b1727c0bb8183f, type: 3}
-  m_Volume: -20
+  m_Volume: -8
   m_Enabled: 1
 --- !u!1307931743 &6418180475301049370
 AudioRandomContainer:

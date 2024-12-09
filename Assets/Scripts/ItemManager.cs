@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public PlayerController player;
+    public SoundManager soundManager;
     public TMP_Text lightCount;
     public TMP_Text matcheCount;
     public TMP_Text potionCount;
@@ -135,6 +136,7 @@ public class ItemManager : MonoBehaviour
             Debug.Log("라이트 사용횟수가 바닥났다!"); 
             return;
         }
+        soundManager.SpendOilSFX();
     }
 
     public void OnSpendMatche() // 버튼 입력에 할당 할 성냥사용 활성화 함수 
@@ -157,6 +159,8 @@ public class ItemManager : MonoBehaviour
 
             return;
         }
+        soundManager.SpendMatcheSFX();
+
     }
 
     public void OnSpendPotion()
@@ -172,6 +176,8 @@ public class ItemManager : MonoBehaviour
             Debug.Log("포션 사용횟수가 바닥났다!");
             return;
         }
+        soundManager.SpendPotionSFX();
+
     }
 
 }

@@ -15,6 +15,8 @@ public class SoundManager : MonoBehaviour
     public Slider bgmSlider;
     public bool uiPop;
     public bool hasPlaySound = false;
+    public bool changeAmbiFild = false;
+    public bool changeAmbiBossZone = false;
 
     public AudioResource playerFootsteps;
     public AudioResource playerSlowSteps;
@@ -22,8 +24,10 @@ public class SoundManager : MonoBehaviour
     public AudioResource spendMatch;
     public AudioResource spendOil;
     public AudioResource spendPotion;
+    public AudioResource lightAttRattle;
     public AudioResource lightAtt;
     public AudioResource bossHit;
+    public AudioResource bossDie;
     public AudioResource buttonClick;
     public AudioResource npcWalla;
     public AudioResource fildAmbi;
@@ -73,19 +77,57 @@ public class SoundManager : MonoBehaviour
     {
         if (soundManager.activeSelf && bossZone.playerCam.activeSelf)
         {
-            if(hasPlaySound) return;
+            if (hasPlaySound) return;
 
+            if (!changeAmbiFild && !changeAmbiBossZone)
+            {
+                audioSource[6].volume -= Time.deltaTime;
+                audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
+                changeAmbiFild = true;
+
+                if(audioSource[6].volume == 0)
+                {
+                    changeAmbiBossZone = true;
+                }
+
+            }
+            audioSource[6].volume += Time.deltaTime;
+            audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
             FildAmbi();
-            hasPlaySound = true;
+
+            if(audioSource[6].volume <= 0.75f)
+            {
+                hasPlaySound = true;
+            }
         }
         
         if(soundManager.activeSelf && bossZone.bossFightCam.activeSelf)
         {
             if (hasPlaySound) return;
 
+            if (changeAmbiFild && changeAmbiBossZone)
+            {
+                audioSource[6].volume -= Time.deltaTime;
+                audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
+                changeAmbiFild = false;
+                //changeAmbiBossZone = true;
+
+                if (audioSource[6].volume == 0)
+                {
+                    changeAmbiBossZone = false;
+                }
+            }
+
+            audioSource[6].volume += Time.deltaTime;
+            audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
             BossZoneAmbi();
-            hasPlaySound = true;
+
+            if (audioSource[6].volume <= 0.75f)
+            {
+                hasPlaySound = true;
+            }
         }
+
     }
 
     private float MapVolumeToSliderValue(float volume)  //db를 슬라이더 값으로 변환
@@ -144,6 +186,18 @@ public class SoundManager : MonoBehaviour
     public void SpendPotionSFX()
     {
         audioSource[1].resource = spendPotion;
+        audioSource[1].Play();
+    }
+
+    public void LightAttRattleSFX()
+    {
+        audioSource[1].resource = lightAttRattle;
+        audioSource[1].Play();
+    }
+
+    public void BossDieSFX()
+    {
+        audioSource[1].resource = bossDie;
         audioSource[1].Play();
     }
 

@@ -8,7 +8,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_GetItem02_{-6605327506535290157}
   m_AudioClip: {fileID: 8300000, guid: 0a971bea9265d2b4881cf59ba3924069, type: 3}
-  m_Volume: 0
+  m_Volume: -10
   m_Enabled: 1
 --- !u!1233149941 &-2697476262643361533
 AudioContainerElement:
@@ -18,7 +18,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_GetItem01_{-2697476262643361533}
   m_AudioClip: {fileID: 8300000, guid: 173eff30f4fef3b45b8050a4068aba15, type: 3}
-  m_Volume: 0
+  m_Volume: -10
   m_Enabled: 1
 --- !u!1307931743 &6418180475301049370
 AudioRandomContainer:

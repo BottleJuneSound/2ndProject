@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class SoundManager : MonoBehaviour
 {
     public GameObject soundSystemPopup;
+    public GameObject soundManager;
+    public BossZone bossZone;
     public AudioMixer audioMixer;
     private float minVolume = -20f;
     private float maxVolume = 0;
@@ -12,10 +14,14 @@ public class SoundManager : MonoBehaviour
     public Slider sfxSlider;
     public Slider bgmSlider;
     public bool uiPop;
+    public bool hasPlaySound = false;
 
     public AudioResource playerFootsteps;
-    //public AudioResource playerEquip;
+    public AudioResource playerSlowSteps;
     public AudioResource getItem;
+    public AudioResource spendMatch;
+    public AudioResource spendOil;
+    public AudioResource spendPotion;
     public AudioResource lightAtt;
     public AudioResource bossHit;
     public AudioResource buttonClick;
@@ -63,6 +69,25 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if (soundManager.activeSelf && bossZone.playerCam.activeSelf)
+        {
+            if(hasPlaySound) return;
+
+            FildAmbi();
+            hasPlaySound = true;
+        }
+        
+        if(soundManager.activeSelf && bossZone.bossFightCam.activeSelf)
+        {
+            if (hasPlaySound) return;
+
+            BossZoneAmbi();
+            hasPlaySound = true;
+        }
+    }
+
     private float MapVolumeToSliderValue(float volume)  //db를 슬라이더 값으로 변환
     {
         return Mathf.InverseLerp(minVolume, maxVolume, volume);
@@ -92,9 +117,33 @@ public class SoundManager : MonoBehaviour
         audioSource[0].Play();
     }
 
+    public void PlayerSlowStepSFX()
+    {
+        audioSource[0].resource = playerSlowSteps;
+        audioSource[0].Play();
+    }
+
     public void GetItemSFX()
     {
         audioSource[1].resource = getItem;
+        audioSource[1].Play();
+    }
+
+    public void SpendMatcheSFX()
+    {
+        audioSource[1].resource = spendMatch;
+        audioSource[1].Play();
+    }
+
+    public void SpendOilSFX()
+    {
+        audioSource[1].resource = spendOil;
+        audioSource[1].Play();
+    }
+
+    public void SpendPotionSFX()
+    {
+        audioSource[1].resource = spendPotion;
         audioSource[1].Play();
     }
 
@@ -126,7 +175,9 @@ public class SoundManager : MonoBehaviour
     {
         if (!uiPop)
         {
+            if(soundSystemPopup.activeSelf) return;
             //Cursor.visible = true;
+            ClickButtonSFX();
             uiPop = true;
             soundSystemPopup.SetActive(true);
             Time.timeScale = 0;
@@ -134,6 +185,8 @@ public class SoundManager : MonoBehaviour
         }
         else if (uiPop)
         {
+            if (!soundSystemPopup.activeSelf) return;
+            ClickButtonSFX();
             uiPop = false;
             soundSystemPopup.SetActive(false);
             Time.timeScale = 1f;
@@ -142,6 +195,7 @@ public class SoundManager : MonoBehaviour
 
     public void AmbiFader(float sliderValue)
     {
+        ClickButtonSFX();
         float volume = Mathf.Lerp(minVolume, maxVolume, sliderValue);
         audioMixer.SetFloat("Ambi", volume);
     }
@@ -149,12 +203,14 @@ public class SoundManager : MonoBehaviour
 
     public void SFXFader(float sliderValue)
     {
+        ClickButtonSFX();
         float volume = Mathf.Lerp (minVolume, maxVolume, sliderValue);
         audioMixer.SetFloat("SFX", volume);
     }
 
     public void BGMFader(float sliderValue)
     {
+        ClickButtonSFX();
         float volume = Mathf.Lerp(minVolume, maxVolume, sliderValue);
         audioMixer.SetFloat("BGM", volume);
     }

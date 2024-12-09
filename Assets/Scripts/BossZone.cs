@@ -17,6 +17,7 @@ public class BossZone : MonoBehaviour
     public BossHPManager bossHPManager;
     public CinemachineRotationComposer riseComposer;
     public CinemachineInputAxisController cineInput;
+    public SoundManager soundManager;
 
     void Start()
     {
@@ -33,6 +34,7 @@ public class BossZone : MonoBehaviour
     {
         if(bossBox.gameObject.tag == "Player")
         {
+            soundManager.hasPlaySound = false;
             playerCam.SetActive(false);
             bossFightCam.SetActive(true);
             boss.GetComponent<NavMeshAgent>().enabled = true;
@@ -72,6 +74,7 @@ public class BossZone : MonoBehaviour
     {
         if (bossBox.gameObject.tag == "Player")
         {
+            soundManager.hasPlaySound = false;
             playerCam.SetActive(true);
             bossFightCam.SetActive(false);
             boss.GetComponent<NavMeshAgent>().enabled = false;

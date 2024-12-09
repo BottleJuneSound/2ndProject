@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public GameObject boss;
     public NavMeshAgent agent;
     public BossHPManager bossHpManager;
+    public SoundManager soundManager;
     public HPManager hpManager;
     public Light playerLight;
     public Light horrorLight;
@@ -89,6 +90,7 @@ public class Enemy : MonoBehaviour
         //보스 오브젝트 비활성화시 에러를 방지하기 위한 조건
         if (agent.enabled == true)
         {
+            soundManager.BossHitSFX();
             bossDamageCollider.enabled = false;
             bossCollider.enabled = false;
 
@@ -196,6 +198,7 @@ public class Enemy : MonoBehaviour
 
             if (triggerLight)
             {
+                soundManager.LightAttackSFX();
                 agent.velocity = Vector3.zero;
 
 

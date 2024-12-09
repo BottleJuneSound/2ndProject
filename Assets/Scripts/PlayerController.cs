@@ -201,6 +201,8 @@ public class PlayerController : MonoBehaviour
 
         if (interactiveAction.IsPressed() && pressPanel.activeSelf)
         {
+            if(activeInteract) return;
+            soundManager.ClickButtonSFX();
             OnInteractive();
         }
 
@@ -209,6 +211,7 @@ public class PlayerController : MonoBehaviour
             if (skillMAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
+                soundManager.ClickButtonSFX();
                 onSkillM = true;
                 OnMedicine();
 
@@ -217,6 +220,7 @@ public class PlayerController : MonoBehaviour
             else if (skillNAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
+                soundManager.ClickButtonSFX();
                 onSkillN = true;
                 OnPray();
             }
@@ -224,12 +228,15 @@ public class PlayerController : MonoBehaviour
             else if (skillBAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
+                soundManager.ClickButtonSFX();
                 onSkillB = true;
                 OnBloodWithdrawal();
             }
 
             else if (closePopupAction.IsPressed() && pressPanel.activeSelf)
             {
+                if (onClose) return;
+                soundManager.ClickButtonSFX();
                 ClosePopup();
                 onClose = true;
             }
@@ -315,16 +322,19 @@ public class PlayerController : MonoBehaviour
     {
         if (itemManager.lightCounter == itemManager.beforLightCounter + 1)
         {
+            soundManager.GetItemSFX();
             importAlarm.SetActive(true);
         }
 
         if (itemManager.matcheCounter == itemManager.beforMatcheCounter + 1)
         {
+            soundManager.GetItemSFX();
             importAlarm.SetActive(true);
         }
 
         if (itemManager.potionCounter == itemManager.beforPotionCounter + 1)
         {
+            soundManager.GetItemSFX();
             importAlarm.SetActive(true);
         }
     }
@@ -569,6 +579,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void WalkSFX()
+    {
+        soundManager.PlayerSlowStepSFX();
+    }
+
+    public void RunSFX()
     {
         soundManager.PlayerFootstepsSFX();
     }

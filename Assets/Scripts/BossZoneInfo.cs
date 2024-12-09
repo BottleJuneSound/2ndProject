@@ -3,6 +3,7 @@ using UnityEngine;
 public class BossZoneInfo : MonoBehaviour
 {
     public PlayerController player;
+    public SoundManager soundManager;
     public bool nowInteracting = false;
 
     void Start()
@@ -20,6 +21,8 @@ public class BossZoneInfo : MonoBehaviour
     {
         if (nowInteracting && player.interactiveAction.IsPressed() && player.pressPanel.activeSelf)
         {
+            if(player.popupPanel.activeSelf) return;
+            soundManager.ClickButtonSFX();
             player.popupPanel.SetActive(true);
         }
     }

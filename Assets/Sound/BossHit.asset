@@ -8,7 +8,7 @@ AudioContainerElement:
   m_PrefabAsset: {fileID: 0}
   m_Name: sfx_BossHit_{-7078321115811766313}
   m_AudioClip: {fileID: 8300000, guid: e3d594b849aaabd418f7d6807512f196, type: 3}
-  m_Volume: 0
+  m_Volume: -3
   m_Enabled: 1
 --- !u!1307931743 &6418180475301049370
 AudioRandomContainer:

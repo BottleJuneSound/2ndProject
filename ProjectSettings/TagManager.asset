@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Light
   - NPC
+  - ClearNPC
+  - EnterBossZone
+  - Boss
+  - BossZoneInfo
   layers:
   - Default
   - TransparentFX

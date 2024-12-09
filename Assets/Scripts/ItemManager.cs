@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public PlayerController player;
+    public SoundManager soundManager;
     public TMP_Text lightCount;
     public TMP_Text matcheCount;
     public TMP_Text potionCount;
@@ -44,17 +45,23 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
-        lightCount.text = "5";
-        matcheCount.text = "0";
-        potionCount.text = "0";
+        if (player == null)
+        {
+            player = GetComponent<PlayerController>();
+        }
 
-        lightCounter = 5;
+        lightCount.text = "2";
+        matcheCount.text = "2";
+        potionCount.text = "2";
         
         beforLightCounter = 0;
         beforMatcheCounter = 0;
         beforPotionCounter = 0;
-        
-        Debug.Log(lightCounter);
+
+        lightCounter = 2;
+        matcheCounter = 2;
+        potionCounter = 2;
+        //Debug.Log(lightCounter);
     }
 
     void Update()
@@ -68,12 +75,6 @@ public class ItemManager : MonoBehaviour
         //생성된 아이템에 맞추어 아래 메서드 실행
     }
 
-    public void ReTryGetItemPopup() //아직 반영되어있지 않음
-    {
-        player.currentText = "이 환자는 이미 진료했던 환자다. 다른 환자를 찾아보자..";
-        player.npcText.text = player.currentText;
-    }
-
     public void GetLightItem()
     {
         beforLightCounter = lightCounter;
@@ -83,8 +84,10 @@ public class ItemManager : MonoBehaviour
         lightCounter = currentLightCount;
         lightCount.text = currentLightCount.ToString();
 
-        currentImportAlarm = "등불 아이템 사용 횟수를 습득하였습니다.";
+        currentImportAlarm = "등불 오일 충전 횟수를 습득하였습니다.";
         importAlarm.text = currentImportAlarm;
+
+        player.GetItemPopup();
 
     }
     public void GetMatcheItem()
@@ -99,6 +102,8 @@ public class ItemManager : MonoBehaviour
         currentImportAlarm = "성냥 아이템을 습득하였습니다.";
         importAlarm.text = currentImportAlarm;
 
+        player.GetItemPopup();
+
     }
 
     public void GetPotionItem()
@@ -112,6 +117,8 @@ public class ItemManager : MonoBehaviour
 
         currentImportAlarm = "체력 아이템을 습득하였습니다.";
         importAlarm.text = currentImportAlarm;
+
+        player.GetItemPopup();
 
     }
 
@@ -129,15 +136,47 @@ public class ItemManager : MonoBehaviour
             Debug.Log("라이트 사용횟수가 바닥났다!"); 
             return;
         }
+        soundManager.SpendOilSFX();
     }
 
     public void OnSpendMatche() // 버튼 입력에 할당 할 성냥사용 활성화 함수 
     {
 
+        int currentMatcheCount = int.Parse(matcheCount.text);
+
+        currentMatcheCount--;
+        currentMatcheCount = Mathf.Clamp(currentMatcheCount, 0, 50);
+        matcheCounter = Mathf.Clamp(matcheCounter, 0, 50);
+
+        matcheCounter = currentMatcheCount;
+        matcheCount.text = currentMatcheCount.ToString();
+
+        if (matcheCounter <= 0)
+        {
+            Debug.Log("성냥 사용횟수가 바닥났다!");
+            Debug.Log("currentMatcheCount " + currentMatcheCount);
+            Debug.Log("matcheCounter " + matcheCounter);
+
+            return;
+        }
+        soundManager.SpendMatcheSFX();
+
     }
 
     public void OnSpendPotion()
     {
+        int currentPotionCount = int.Parse(potionCount.text); 
+        currentPotionCount--;
+
+        potionCounter = currentPotionCount;
+        potionCount.text= currentPotionCount.ToString();
+
+        if (potionCounter < 0)
+        {
+            Debug.Log("포션 사용횟수가 바닥났다!");
+            return;
+        }
+        soundManager.SpendPotionSFX();
 
     }
 

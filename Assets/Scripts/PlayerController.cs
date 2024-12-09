@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.Burst.CompilerServices;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -18,10 +19,16 @@ public class PlayerController : MonoBehaviour
     public GameObject buttonN;
     public GameObject buttonB;
     public GameObject importAlarm;
+    public Enemy boss;
     public CapsuleCollider lightAttackCollider;
     public ItemManager itemManager;
+    public LightManager lightManager;
+    public HPManager hpManager;
+    public BossHPManager bossHP;
+    public SoundManager soundManager;
 
     public TMP_Text npcText;
+    public TMP_Text interText;
 
     public Transform playerAngle;
     public StateMachine stateMachine;
@@ -33,17 +40,22 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     CinemachineInputAxisController cineCam;
-    InputAction moveAction;
+    public InputAction moveAction;
     InputAction runAction;
     public InputAction skillMAction;
     public InputAction skillNAction;
     public InputAction skillBAction;
     InputAction closePopupAction;
     public InputAction interactiveAction;
-    InputAction lightAttackAction;
+    public InputAction lightAttackAction;
+    public InputAction AddLightOilAction;
+    public InputAction lightOnOffAction;
+    public InputAction AddPotionSpendAction;
 
     public string oriText;
     public string currentText;
+    public string interOriText;
+    public string interCurrentText;
 
     public bool activeInteract = false;
     public bool onSkillM = false;
@@ -64,9 +76,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        lightAttackButton = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = true;
         // 나중에 커서이미지로 바꿔보자. 시점 변환을 위한 마우스이기 때문에 없어도?
-        Cursor.visible = true;
+
+        Cursor.lockState = CursorLockMode.Confined;
         //lightAttackCollider.SetActive(false);
 
         lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
@@ -84,12 +99,16 @@ public class PlayerController : MonoBehaviour
         interactiveAction = inputActions.FindAction("Interact");
         closePopupAction = inputActions.FindAction("Exit");
         lightAttackAction = inputActions.FindAction("Attack");
+        AddLightOilAction = inputActions.FindAction("ReloadLight");
+        lightOnOffAction = inputActions.FindAction("SpendMatchLightOnOff");
+        AddPotionSpendAction = inputActions.FindAction("SpendPotion");
 
         characterController = GetComponent<CharacterController>();
         GetComponent<Animator>().SetTrigger("PlayerIdle");
 
         stateMachine.Initialize(stateMachine.idleState);
         oriText = npcText.text;
+        interOriText = interText.text;
         importAlarm.SetActive(false);
 
         //if (itemManager == null)
@@ -108,6 +127,21 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (hpManager.playerDeath)
+        {
+            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+            lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
+            //lightAttackCollider.SetActive(true);
+            moveAction.Disable();
+            runAction.Disable();
+            skillMAction.Disable();
+            skillNAction.Disable();
+            skillBAction.Disable();
+            interactiveAction.Disable();
+            closePopupAction.Disable();
+
+            return;
+        }
 
         //3D에서 y는 Z에 반영하는 것이 자연스러움. xyz 위치 바꿔주는 내용
         Vector2 moveVector = moveAction.ReadValue<Vector2>();
@@ -167,6 +201,8 @@ public class PlayerController : MonoBehaviour
 
         if (interactiveAction.IsPressed() && pressPanel.activeSelf)
         {
+            if(activeInteract) return;
+            soundManager.ClickButtonSFX();
             OnInteractive();
         }
 
@@ -175,27 +211,32 @@ public class PlayerController : MonoBehaviour
             if (skillMAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
+                soundManager.ClickButtonSFX();
                 onSkillM = true;
                 OnMedicine();
 
             }
 
-            if (skillNAction.IsPressed() && pressPanel.activeSelf)
+            else if (skillNAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
+                soundManager.ClickButtonSFX();
                 onSkillN = true;
                 OnPray();
             }
 
-            if (skillBAction.IsPressed() && pressPanel.activeSelf)
+            else if (skillBAction.IsPressed() && pressPanel.activeSelf)
             {
                 if (skillActive) return;
+                soundManager.ClickButtonSFX();
                 onSkillB = true;
                 OnBloodWithdrawal();
             }
 
-            if (closePopupAction.IsPressed() && pressPanel.activeSelf)
+            else if (closePopupAction.IsPressed() && pressPanel.activeSelf)
             {
+                if (onClose) return;
+                soundManager.ClickButtonSFX();
                 ClosePopup();
                 onClose = true;
             }
@@ -207,12 +248,11 @@ public class PlayerController : MonoBehaviour
         {
             if (onSkillM)
             {
-                //buttonM.GetComponent<Image>().color = Color.clear / Time.deltaTime;       // 점진적으로 a값 증가 시킬 수 있는 방법 찾기
                 skillActive = true;
                 currentText = "약물치료를 시행하였습니다.";
                 npcText.text = currentText;
 
-                GetItemPopup();
+                //GetItemPopup();
                 Invoke("ResetAllSkill", 3f);
             }
             else if (onSkillN)
@@ -234,26 +274,33 @@ public class PlayerController : MonoBehaviour
                 Invoke("ResetAllSkill", 3f);
             }
 
-            else
-            {
-                npcText.text = oriText;
-            }
+            //else
+            //{
+            //    npcText.text = oriText;
+            //}
         }
 
-        if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.lightCounter > 0)
+        if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.matcheCounter >= 0)
         {
             //Debug.Log("반환중");
             //if (lightAttackButton) return;
-            Debug.Log(itemManager.lightCounter);
+            //Debug.Log(itemManager.lightCounter);
+            soundManager.LightAttRattleSFX();
             isAttack = true;
             lightAttackButton = true;
             //Debug.Log("작동중");
             LightAttack();
         }
-        else if (lightAttackAction.WasReleasedThisFrame())
+        //else if(lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.matcheCounter >= 0 && lightManager.lightOff)
+        //{
+        //    isAttack = true;
+        //    lightAttackButton = true;
+        //}
+        else if (lightAttackAction.WasReleasedThisFrame() || itemManager.matcheCounter < 0)
         {
             isAttack = false;
             lightAttackButton = false;
+            boss.playerLight.intensity = 50;
             EndLightAttack();
         }
 
@@ -270,20 +317,25 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void GetItemPopup()  //아이템 카운터에 1만큼 더해지는 변화가 발생하면 동작. 현재 오류 있음
+    public void GetItemPopup() 
+        //플레이어 컨트롤러에서 적용하면 프로그램이 꼬인다.
+        //아이템매니저에서 카운터가 변경된 직후 반영하여 오류해결
     {
         if (itemManager.lightCounter == itemManager.beforLightCounter + 1)
         {
+            soundManager.GetItemSFX();
             importAlarm.SetActive(true);
         }
 
         if (itemManager.matcheCounter == itemManager.beforMatcheCounter + 1)
         {
+            soundManager.GetItemSFX();
             importAlarm.SetActive(true);
         }
 
         if (itemManager.potionCounter == itemManager.beforPotionCounter + 1)
         {
+            soundManager.GetItemSFX();
             importAlarm.SetActive(true);
         }
     }
@@ -300,9 +352,6 @@ public class PlayerController : MonoBehaviour
             loadB.gameObject.SetActive(false);
             importAlarm.SetActive(false);
 
-
-
-
             skillActive = false;
             npcText.text = oriText;
         }
@@ -314,20 +363,39 @@ public class PlayerController : MonoBehaviour
     {
         if (lightAttackButton)
         {
-            lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.3f;
-            lightAttackCollider.GetComponent<CapsuleCollider>().height = 1f;
-            //lightAttackCollider.SetActive(true);
-            moveAction.Disable();
-            runAction.Disable();
-            skillMAction.Disable();
-            skillNAction.Disable();
-            skillBAction.Disable();
-            interactiveAction.Disable();
-            closePopupAction.Disable();
-            itemManager.OnSpendLight();
-            OnLightAttack();
+            if (lightManager.lightOff)
+            {
+                lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0;
+                lightAttackCollider.GetComponent<CapsuleCollider>().height = 0;
+                //lightAttackCollider.SetActive(true);
+                moveAction.Disable();
+                runAction.Disable();
+                skillMAction.Disable();
+                skillNAction.Disable();
+                skillBAction.Disable();
+                interactiveAction.Disable();
+                closePopupAction.Disable();
+                OnLightAttack();
+            }
+            
+            if (!lightManager.lightOff)
+            {
+                lightAttackCollider.GetComponent<CapsuleCollider>().radius = 0.3f;
+                lightAttackCollider.GetComponent<CapsuleCollider>().height = 2.5f;
+                //lightAttackCollider.SetActive(true);
+                moveAction.Disable();
+                runAction.Disable();
+                skillMAction.Disable();
+                skillNAction.Disable();
+                skillBAction.Disable();
+                interactiveAction.Disable();
+                closePopupAction.Disable();
+                OnLightAttack();
 
-            //Invoke("EndLightAttack", 3f);
+                //Invoke("EndLightAttack", 3f);
+            }
+
+
         }
     }
 
@@ -346,6 +414,14 @@ public class PlayerController : MonoBehaviour
         OnIdle();
     }
 
+    public void OnPlayerDeath()
+    {
+        stateMachine.TransitionTo(stateMachine.playerDeathState);
+    }
+    public void OnLightAttackEnd()
+    {
+        stateMachine.TransitionTo(stateMachine.lightAttackEnd);
+    }
     public void OnLightAttack()
     {
         stateMachine.TransitionTo(stateMachine.lightFindState);
@@ -367,7 +443,7 @@ public class PlayerController : MonoBehaviour
     public void OnBloodWithdrawal() // 상호작용 스킬 사용시, 상호작용 시작부분으로 돌아옴.
     {
         loadB.gameObject.SetActive(true);
-        Debug.Log("방혈치료 시행!");
+        //Debug.Log("방혈치료 시행!");
         OnInteractive();
         //activeInteract = false;
 
@@ -376,7 +452,7 @@ public class PlayerController : MonoBehaviour
     public void OnMedicine()
     {
         loadM.gameObject.SetActive(true);
-        Debug.Log("약물치료 시행!");
+        //Debug.Log("약물치료 시행!");
         OnInteractive();
         //activeInteract = false;
     }
@@ -384,7 +460,7 @@ public class PlayerController : MonoBehaviour
     public void OnPray()
     {
         loadN.gameObject.SetActive(true);
-        Debug.Log("기도치료 시행!");
+        //Debug.Log("기도치료 시행!");
         OnInteractive();
         //activeInteract = false;
 
@@ -401,8 +477,9 @@ public class PlayerController : MonoBehaviour
     public void OnInteractive()
     {
         if (activeInteract == true) return;
+        if (gameObject.tag == "ClearNPC") return;
 
-        Debug.Log("상호작용을 시작합니다.");
+        //Debug.Log("상호작용을 시작합니다.");
         lightAttackAction.Disable();
         activeInteract = true;
         cineCam.enabled = false;
@@ -415,32 +492,101 @@ public class PlayerController : MonoBehaviour
     {
         if (activeInteract == false) return;
 
-        Debug.Log("상호작용이 종료되었습니다.");
+        //Debug.Log("상호작용이 종료되었습니다.");
         lightAttackAction.Enable();
         if (interactiveAction.IsPressed()) activeInteract = false;
         cineCam.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         onClose = false;
 
     }
 
+    public void ReTryGetItemPopup() //환자 상호작용에서 정답 맞춘 후 띄우는 팝업 text변경
+    {
+        skillMAction.Disable();
+        skillNAction.Disable();
+        skillBAction.Disable();
+
+        currentText = "이 환자는 이미 진료했던 환자다. 다른 환자를 찾아보자..";
+        npcText.text = currentText;
+    }
 
     private void OnTriggerEnter(Collider playerTrigger)
     {
         if (playerTrigger.gameObject.tag == "NPC")
         {
+            interText.text = interOriText;
+            npcText.text = oriText;
             npcText.gameObject.SetActive(true);
-
         }
+
+        if (playerTrigger.gameObject.tag == "ClearNPC")   //  상호작용을 마친 npc는 태그를 교체하고 해당 부분을 실행시킨다.
+        {
+            //Debug.Log("변경된 태그 작동되는지 확인중");
+            npcText.gameObject.SetActive(true);
+            ReTryGetItemPopup();
+        }
+
+        if (playerTrigger.gameObject.tag == "BossZoneInfo" && bossHP.currentActiveIndex <= 4)
+        {
+            currentText = "당신은 아직 보스를 상대하기에 충분히 준비되지 않았습니다. \n마을의 병든 시민을 치료하여 보스의 공격에 대비하세요.";
+            npcText.text = currentText;
+            npcText.gameObject.SetActive(true);
+        }
+
+        if (playerTrigger.gameObject.tag == "BossZoneInfo" && bossHP.currentActiveIndex > 4)
+        {
+            currentText = "보스가 환자를 치료한 당신을 지켜보고 있습니다. \n보스를 처치하여 마을을 구하세요";
+            npcText.text = currentText;
+            npcText.gameObject.SetActive(true);
+        }
+
     }
+
+    private void OnTriggerStay(Collider playerTrigger)
+    {
+        if(playerTrigger.gameObject.tag == "Boss")
+        {
+            hpManager.LossHealth();
+        }
+
+    }
+
     private void OnTriggerExit(Collider playerTrigger)
     {
         if (playerTrigger.gameObject.tag == "NPC")
         {
-            npcText.gameObject.SetActive(false);    // 이 부분에서 상호작용 종료 디버그가 발생하네? 어디서 실행되는건지 확인필요
-
+            npcText.gameObject.SetActive(false);
         }
+
+        if (playerTrigger.gameObject.tag == "ClearNPC") 
+        {
+            npcText.gameObject.SetActive(false);
+            
+            skillMAction.Enable();
+            skillNAction.Enable();
+            skillBAction.Enable();
+        }
+        if (playerTrigger.gameObject.tag == "Boss")
+        {
+            hpManager.hpAlarm.enabled = false;
+        }
+
+        if (playerTrigger.gameObject.tag == "BossZoneInfo")
+        {
+            npcText.gameObject.SetActive(false);
+        }
+    }
+
+    public void WalkSFX()
+    {
+        soundManager.PlayerSlowStepSFX();
+    }
+
+    public void RunSFX()
+    {
+        soundManager.PlayerFootstepsSFX();
     }
 
 

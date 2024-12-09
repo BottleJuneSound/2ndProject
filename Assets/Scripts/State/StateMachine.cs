@@ -9,6 +9,8 @@ public class StateMachine
     public WalkState walkState;
     public RunState runState;
     public LightFindState lightFindState;
+    public LightAttackEnd lightAttackEnd;
+    public PlayerDeathState playerDeathState;
 
     public StateMachine(PlayerController player)
     {
@@ -18,6 +20,8 @@ public class StateMachine
         walkState = new WalkState(player);
         runState = new RunState(player);
         lightFindState = new LightFindState(player);
+        lightAttackEnd = new LightAttackEnd(player);
+        playerDeathState = new PlayerDeathState(player);
     }
 
     public void Initialize(IState state)
@@ -38,6 +42,5 @@ public class StateMachine
     {
         CurrentState.Execute();
     }
-
 
 }

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +12,16 @@ public class HPManager : MonoBehaviour
     public Image hpAlarm;
     public StateMachine stateMachine;
     public bool playerDeath;
-    
+
+    public GameObject gameOverAlarm;
+    public TMP_Text gameOverTMP;
+    public string gameOverText;
 
     void Start()
     {
+        gameOverText = "보스로 부터 마을을 구하지 못했습니다.";
+        gameOverAlarm.SetActive(false);
+
         playerDeath = false;
         hpAlarm.enabled = false;
         health = 0.5f;  //임시값. 나중에 1로 변경해야함
@@ -81,6 +88,8 @@ public class HPManager : MonoBehaviour
 
             player.OnPlayerDeath();
             hpAlarm.enabled = false;
+            gameOverAlarm.SetActive(true);
+            gameOverTMP.text = gameOverText;
             
             Debug.Log("플레이어 체력 0으로 게임 종료 리트하셈!");
             //Invoke("GameOverPopUp", 1f);

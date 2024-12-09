@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     CinemachineInputAxisController cineCam;
-    InputAction moveAction;
+    public InputAction moveAction;
     InputAction runAction;
     public InputAction skillMAction;
     public InputAction skillNAction;

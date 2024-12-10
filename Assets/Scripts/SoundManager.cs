@@ -81,9 +81,9 @@ public class SoundManager : MonoBehaviour
 
             if (!changeAmbiFild && !changeAmbiBossZone)
             {
-                audioSource[6].volume -= Time.deltaTime;
-                audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
-                changeAmbiFild = true;
+                //audioSource[6].volume -= Time.deltaTime;
+                //audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
+                //changeAmbiFild = true;
 
                 if(audioSource[6].volume == 0)
                 {
@@ -99,34 +99,43 @@ public class SoundManager : MonoBehaviour
             {
                 hasPlaySound = true;
             }
-        }
-        
-        if(soundManager.activeSelf && bossZone.bossFightCam.activeSelf)
-        {
-            if (hasPlaySound) return;
 
-            if (changeAmbiFild && changeAmbiBossZone)
+            if(soundManager.activeSelf && bossZone.bossFightCam.activeSelf)
             {
                 audioSource[6].volume -= Time.deltaTime;
-                audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
-                changeAmbiFild = false;
-                //changeAmbiBossZone = true;
-
-                if (audioSource[6].volume == 0)
-                {
-                    changeAmbiBossZone = false;
-                }
-            }
-
-            audioSource[6].volume += Time.deltaTime;
-            audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
-            BossZoneAmbi();
-
-            if (audioSource[6].volume <= 0.75f)
-            {
-                hasPlaySound = true;
+                audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0.15f, 0.75f);
+                FildAmbi();
+                if(audioSource[6].volume <= 0.15f) hasPlaySound = true;
             }
         }
+        
+        //해당 코드가 담당하던 보스 ambi는 3D 사운드게임오브젝트로 변경됨 
+        //if(soundManager.activeSelf && bossZone.bossFightCam.activeSelf)
+        //{
+        //    if (hasPlaySound) return;
+
+        //    if (changeAmbiFild && changeAmbiBossZone)
+        //    {
+        //        audioSource[6].volume -= Time.deltaTime;
+        //        audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
+        //        changeAmbiFild = false;
+        //        //changeAmbiBossZone = true;
+
+        //        if (audioSource[6].volume == 0)
+        //        {
+        //            changeAmbiBossZone = false;
+        //        }
+        //    }
+
+        //    audioSource[6].volume += Time.deltaTime;
+        //    audioSource[6].volume = Mathf.Clamp(audioSource[6].volume, 0, 0.75f);
+        //    BossZoneAmbi();
+
+        //    if (audioSource[6].volume <= 0.75f)
+        //    {
+        //        hasPlaySound = true;
+        //    }
+        //}
 
     }
 

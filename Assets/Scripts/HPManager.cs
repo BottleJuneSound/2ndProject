@@ -72,7 +72,7 @@ public class HPManager : MonoBehaviour
     {
         if(health > 0)
         {
-            health -= Time.deltaTime / 10 ;
+            health -= Time.deltaTime / 5;
             health = Mathf.Clamp(health, 0, 1);
             hpAlarm.enabled = true;
         }

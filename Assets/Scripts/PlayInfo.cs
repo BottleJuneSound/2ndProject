@@ -17,6 +17,7 @@ public class PlayInfo : MonoBehaviour
         info02.SetActive(false);
         infoButton = false;
         OnInfoButton();
+
     }
 
     void Update()

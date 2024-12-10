@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public HPManager hpManager;
     public BossHPManager bossHP;
     public SoundManager soundManager;
+    public PlayInfo playInfo;
 
     public TMP_Text npcText;
     public TMP_Text interText;
@@ -280,7 +281,8 @@ public class PlayerController : MonoBehaviour
             //}
         }
 
-        if (lightAttackAction.WasPressedThisFrame() && !isAttack && itemManager.matcheCounter >= 0)
+        if (lightAttackAction.WasPressedThisFrame() && !playInfo.infoButton && !soundManager.uiPop
+            && !isAttack && itemManager.matcheCounter >= 0)
         {
             //Debug.Log("¹ÝÈ¯Áß");
             //if (lightAttackButton) return;
